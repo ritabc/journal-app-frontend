@@ -1,5 +1,11 @@
 # Getting Started with Create React App
 
+# JournalRecorder - a WIP journal app.
+
+Uses Google SignIn and JWT For Auth. Relies on [Rails API](https://github.com/ritabc/journal-app-backend)
+
+## Working from wireframe: ![image](https://user-images.githubusercontent.com/11031915/103111329-d49b3400-4619-11eb-8e29-8513d50ca0bf.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
