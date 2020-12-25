@@ -1,63 +1,32 @@
-import { findByLabelText } from "@testing-library/react";
 import React from "react";
+import JournalsList from "./JournalsList";
+import SearchAll from "./SearchAll";
+import NewJournalBtn from "./NewJournalBtn";
 
 const SideBar = () => {
   const sideBarStyles = {
-    minHeight: "100vh",
+    color: "#f8f9fa",
+    fontWeight: "800",
   };
 
-  const titleStyles = {
-    // borderBottomColor: "rgba(114,0,114,1)",
-  };
-
-  const searchInputStyles = {
-    fontSize: "0.7em",
-  };
-
-  const formStyles = {
+  const newJournalBtnStyle = {
     display: "flex",
-    justifyContent: "space-between",
-  };
-
-  const searchButtonStyles = {
-    borderRadius: "10px",
+    justifyContent: "center",
   };
 
   return (
     <React.Fragment>
-      <div className="bg-light" style={sideBarStyles}>
+      <div className="bg-dark h-100" style={sideBarStyles}>
         <h3 className="p-2">My Journals</h3>
-        <form style={formStyles}>
-          <div>
-            <input
-              style={searchInputStyles}
-              type="text"
-              className="form-control"
-              placeholder="Search All Journals"
-              aria-label="Search All Journals"
-            />
-          </div>
-          <div>
-            <button
-              style={searchButtonStyles}
-              type="submit"
-              className="btn btn-sm btn-success"
-            >
-              Search
-            </button>
-          </div>
-        </form>
-        <ul>
-          <li>
-            {/* <a href="#"> */}
-            <strong>Daily Notes</strong>
-            {/* </a> */}
-          </li>
-          <li>Introspective Notes</li>
-          <li>Dream Diary</li>
-          <li>Travel / Trips</li>
-          <li>Recipes</li>
-        </ul>
+        <div className="py-2">
+          <SearchAll />
+        </div>
+        <div className="py-4">
+          <JournalsList />
+        </div>
+        <div style={newJournalBtnStyle}>
+          <NewJournalBtn />
+        </div>
       </div>
     </React.Fragment>
   );

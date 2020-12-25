@@ -1,0 +1,7 @@
+#new-note-btn {
+  background-color: "#81388c";
+}
+
+#new-note-btn:hover {
+  border: "solid 2px red";
+}
