@@ -3,7 +3,7 @@ import JournalsList from "./JournalsList";
 import SearchAll from "./SearchAll";
 import NewJournalBtn from "./NewJournalBtn";
 
-const SideBar = () => {
+const SideBar = (props) => {
   const sideBarStyles = {
     color: "#f8f9fa",
     fontWeight: "800",
@@ -22,7 +22,10 @@ const SideBar = () => {
           <SearchAll />
         </div>
         <div className="py-4">
-          <JournalsList />
+          <JournalsList
+            journals={props.journals}
+            currentlySelectedJournal={props.currentlySelectedJournal}
+          />
         </div>
         <div style={newJournalBtnStyle}>
           <NewJournalBtn />

@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
@@ -20,4 +21,10 @@ code {
 #search-one-input::placeholder {
   color: #6c757d;
   font-weight: bold;
+}
+
+html,
+body,
+#root {
+  height: 100vh;
 }

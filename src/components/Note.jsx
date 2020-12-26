@@ -1,19 +1,19 @@
 import React from "react";
 
-const Note = () => {
+const Note = (props) => {
   return (
     <React.Fragment>
       <div className="col-4">
         <div className="card my-2">
           <div className="card-body">
             <div className="card-title">
-              <h4>12/12/20</h4>
+              <h4>{props.dateCreated}</h4>
             </div>
+            <p className="card-text">{props.content}</p>
             <p className="card-text">
-              Gave the dog her heartworm medicine and her flea/tick med...
-            </p>
-            <p className="card-text">
-              <small className="text-muted">Last updated 3 mins ago</small>
+              <small className="text-muted">
+                Last updated {props.lastUpdated}
+              </small>
             </p>
           </div>
         </div>

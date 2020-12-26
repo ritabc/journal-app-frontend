@@ -1,27 +1,33 @@
 import React from "react";
 
-const JournalsList = () => {
-  const selectedStyle = {
-    color: "#343a40",
-    lineHeight: "2.5",
-    border: "3px solid transparent",
-    borderRadius: "10px 0 0 10px",
-  };
-  const liStyle = {
-    lineHeight: "2.5",
-  };
+const selectedStyle = {
+  color: "#343a40",
+  lineHeight: "2.5",
+  border: "3px solid transparent",
+  borderRadius: "10px 0 0 10px",
+  backgroundColor: "#f8f9fa",
+  lineHeight: "2.5",
+};
+const nonSelectedStyle = {
+  lineHeight: "2.5",
+};
 
+const JournalsList = (props) => {
   return (
     <React.Fragment>
       <ul>
-        <li style={selectedStyle} className="bg-light">
-          {/* <a href="#"> */}
-          Daily Notes {/* </a> */}
-        </li>
-        <li style={liStyle}>Introspective Notes</li>
-        <li style={liStyle}>Dream Diary</li>
-        <li style={liStyle}>Travel / Trips</li>
-        <li style={liStyle}>Recipes</li>
+        {props.journals.map((journal) => (
+          <li
+            style={
+              journal.id === props.currentlySelectedJournal.id
+                ? selectedStyle
+                : nonSelectedStyle
+            }
+            key={journal.id}
+          >
+            {journal.name}
+          </li>
+        ))}
       </ul>
     </React.Fragment>
   );

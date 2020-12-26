@@ -5,18 +5,28 @@ import JournalRecorder from "./JournalRecorder";
 class App extends Component {
   state = {
     loggedIn: true,
+    currentUser: "Rita",
   };
 
   render() {
     let currentlyVisible = null;
-    if (this.state.loggedIn) {
-      currentlyVisible = <JournalRecorder />;
+    let currentUserExistsInData = false;
+    let currentUsersData = null;
+    for (let i = 0; i < this.props.data.users.length; i++) {
+      let user = this.props.data.users[i];
+      if (this.state.currentUser === user.firstName) {
+        currentUserExistsInData = true;
+        currentUsersData = user;
+      }
+    }
+    if (this.state.loggedIn && currentUserExistsInData) {
+      currentlyVisible = <JournalRecorder currentUser={currentUsersData} />;
     } else {
       currentlyVisible = <GoogleBtn />;
     }
     return (
       <React.Fragment>
-        <div>{currentlyVisible}</div>
+        <div className="h-100">{currentlyVisible}</div>
       </React.Fragment>
     );
   }

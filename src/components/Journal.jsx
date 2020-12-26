@@ -3,7 +3,7 @@ import NewNoteBtn from "./NewNoteBtn";
 import SearchOne from "./SearchOne";
 import Note from "./Note";
 
-const Journal = () => {
+const Journal = (props) => {
   const headerStyle = {
     display: "flex",
     justifyContent: "space-between",
@@ -22,7 +22,7 @@ const Journal = () => {
         <div style={headerStyle} className="row py-3">
           <div style={titleNewStyle}>
             <h2 style={titleStyle} className="pr-2">
-              Daily Notes Journal
+              {props.currentJournal.name}
             </h2>
             <div className="pl-2">
               <NewNoteBtn />
@@ -31,16 +31,13 @@ const Journal = () => {
           <SearchOne />
         </div>
         <div className="row">
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
+          {props.currentJournal.notes.map((note) => (
+            <Note
+              dateCreated={note.dateCreated}
+              content={note.content}
+              lastUpdated={note.lastUpdated}
+            />
+          ))}
         </div>
       </div>
     </React.Fragment>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = () => {
+const Header = (props) => {
   const headerStyles = {
     display: "flex",
     justifyContent: "space-between",
@@ -22,7 +22,7 @@ const Header = () => {
       <div className="bg-dark py-3 px-3 mb-0" style={headerStyles}>
         <h1 style={titleStyles}>JournalRecorder</h1>
         <div className="my-auto">
-          <span className="mr-3">Logged In As Rita</span>
+          <span className="mr-3">Logged In As {props.userFirstName}</span>
           <button className="btn" style={logOutBtnStyles}>
             Log Out
           </button>
