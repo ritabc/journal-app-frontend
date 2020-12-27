@@ -9,6 +9,7 @@ let data = {
           name: "Daily Notes",
           notes: [
             {
+              id: 1,
               dateCreated: "12/24/2020",
               title: "Holiday Celebration",
               content:
@@ -16,6 +17,7 @@ let data = {
               lastUpdated: "1 day ago",
             },
             {
+              id: 2,
               dateCreated: "12/12/2020",
               title: "Cleo December Meds",
               content:
@@ -23,6 +25,7 @@ let data = {
               lastUpdated: "3 minutes ago",
             },
             {
+              id: 3,
               dateCreated: "10/31/2020",
               title: "Cleo Halloween 2020",
               content:
@@ -30,6 +33,7 @@ let data = {
               lastUpdated: "2 weeks ago",
             },
             {
+              id: 4,
               dateCreated: "10/10/2020",
               title: "Cleo!",
               content:
@@ -37,6 +41,7 @@ let data = {
               lastUpdated: "3 minutes ago",
             },
             {
+              id: 5,
               dateCreated: "12/24/2020",
               title: "Holiday Celebration",
               content:
@@ -44,6 +49,7 @@ let data = {
               lastUpdated: "1 day ago",
             },
             {
+              id: 6,
               dateCreated: "12/12/2020",
               title: "Cleo December Meds",
               content:
@@ -51,6 +57,7 @@ let data = {
               lastUpdated: "3 minutes ago",
             },
             {
+              id: 7,
               dateCreated: "10/31/2020",
               title: "Cleo Halloween 2020",
               content:
@@ -58,6 +65,7 @@ let data = {
               lastUpdated: "2 weeks ago",
             },
             {
+              id: 8,
               dateCreated: "10/10/2020",
               title: "Cleo!",
               content:

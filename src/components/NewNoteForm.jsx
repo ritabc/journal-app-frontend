@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 } from "uuid";
 
 const titleStyles = { color: "#343a40" };
 const inputStyles = {
@@ -13,21 +14,33 @@ const saveNoteBtnStyles = {
 };
 
 const NewNoteForm = (props) => {
+  function handleNewNoteFormSubmission(event) {
+    // event.preventDefault();
+    props.onNewNoteCreation({
+      dateCreated: Date.now(),
+      title: event.target.title.value,
+      content: event.target.content.value,
+      lastUpdated: Date.now(),
+      id: v4(),
+    });
+  }
+
   return (
     <React.Fragment>
-      <div clasName="container-fluid">
+      <div className="container-fluid">
         <h2 className="py-3" style={titleStyles}>
           New Note in Journal: {props.currentJournal.name}
         </h2>
-        <form>
+        <form onSubmit={handleNewNoteFormSubmission}>
           <div className="form-floating pb-3">
             <input
               type="text"
               className="form-control"
               id="titleInput"
               placeholder="Note Title"
+              name="title"
             />
-            <label for="titleInput" style={inputStyles}>
+            <label htmlFor="titleInput" style={inputStyles}>
               Note Title
             </label>
           </div>
@@ -39,13 +52,13 @@ const NewNoteForm = (props) => {
               placeholder="Enter note content"
               style={textAreaStyles}
             ></textarea>
-            <label for="contentInput" style={inputStyles}>
+            <label htmlFor="contentInput" style={inputStyles}>
               Enter note content
             </label>
           </div>
           <button
             type="submit"
-            class="btn btn-lg mt-3"
+            className="btn btn-lg mt-3"
             style={saveNoteBtnStyles}
           >
             Save Note

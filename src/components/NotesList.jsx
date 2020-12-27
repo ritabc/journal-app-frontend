@@ -15,7 +15,16 @@ const titleNewStyle = {
 
 const titleStyle = { color: "#343a40" };
 
+const newNoteBtnStyles = {
+  border: "3px solid #5A2762",
+  color: "#343a40",
+};
+
 const NotesList = (props) => {
+  function handleNewNoteBtnClick() {
+    props.onClickOfNewNoteBtn();
+  }
+
   return (
     <React.Fragment>
       <div className="container-fluid">
@@ -23,7 +32,13 @@ const NotesList = (props) => {
           <div style={titleNewStyle}>
             <h2 style={titleStyle}>{props.currentJournal.name}</h2>
             <div className="px-3">
-              <NewNoteBtn />
+              <button
+                onClick={handleNewNoteBtnClick}
+                style={newNoteBtnStyles}
+                className="btn btn-lg px-auto"
+              >
+                + New Note
+              </button>{" "}
             </div>
           </div>
           <div className="pt-2">
@@ -31,8 +46,12 @@ const NotesList = (props) => {
           </div>
         </div>
         <div className="row">
+          {/* TODO: eventually, remove one method of storing the data. For now, work with notes from staticData.js for show, and with stateNotes for practie with passing events up and altering state that way */}
           {props.currentJournal.notes.map((note) => (
-            <Note note={note} />
+            <Note note={note} key={note.id} />
+          ))}
+          {props.stateNotes.map((note) => (
+            <Note note={note} key={note.id} />
           ))}
         </div>
       </div>

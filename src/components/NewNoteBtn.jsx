@@ -1,19 +1,20 @@
-import React from "react";
-import "../styles/NewNoteBtn.css";
+// import React from "react";
+// import "../styles/NewNoteBtn.css";
 
-const NewNoteBtn = () => {
-  const newJournalBtnStyles = {
-    border: "3px solid #5A2762",
-    color: "#343a40",
-  };
+// const handleClick = () => {};
 
-  return (
-    <React.Fragment>
-      <button style={newJournalBtnStyles} className="btn btn-lg px-auto">
-        + New Note
-      </button>
-    </React.Fragment>
-  );
-};
+// const NewNoteBtn = () => {
+//   return (
+//     <React.Fragment>
+//       <button
+//         onClick={handleClick}
+//         style={newJournalBtnStyles}
+//         className="btn btn-lg px-auto"
+//       >
+//         + New Note
+//       </button>
+//     </React.Fragment>
+//   );
+// };
 
-export default NewNoteBtn;
+// export default NewNoteBtn;
