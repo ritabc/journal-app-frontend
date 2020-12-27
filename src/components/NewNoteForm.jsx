@@ -22,6 +22,7 @@ const NewNoteForm = (props) => {
       content: event.target.content.value,
       lastUpdated: Date.now(),
       id: v4(),
+      journalID: event.target.journalID.value,
     });
   }
 
@@ -32,6 +33,11 @@ const NewNoteForm = (props) => {
           New Note in Journal: {props.currentJournal.name}
         </h2>
         <form onSubmit={handleNewNoteFormSubmission}>
+          <input
+            type="hidden"
+            name="journalID"
+            value={props.currentJournal.id}
+          />
           <div className="form-floating pb-3">
             <input
               type="text"

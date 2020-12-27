@@ -47,12 +47,16 @@ const NotesList = (props) => {
         </div>
         <div className="row">
           {/* TODO: eventually, remove one method of storing the data. For now, work with notes from staticData.js for show, and with stateNotes for practie with passing events up and altering state that way */}
-          {props.currentJournal.notes.map((note) => (
-            <Note note={note} key={note.id} />
-          ))}
-          {props.stateNotes.map((note) => (
-            <Note note={note} key={note.id} />
-          ))}
+          {props.currentJournal.notes
+            .filter((note) => note.journalID == props.currentJournal.id)
+            .map((note) => (
+              <Note note={note} key={note.id} />
+            ))}
+          {props.stateNotes
+            .filter((note) => note.journalID == props.currentJournal.id)
+            .map((note) => (
+              <Note note={note} key={note.id} />
+            ))}
         </div>
       </div>
     </React.Fragment>
