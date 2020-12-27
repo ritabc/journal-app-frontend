@@ -22,7 +22,7 @@ const Header = (props) => {
       <div className="bg-dark py-3 px-3 mb-0" style={headerStyles}>
         <h1 style={titleStyles}>JournalRecorder</h1>
         <div className="my-auto">
-          <span className="mr-3">Logged In As {props.userFirstName}</span>
+          <span className="me-3">Logged In As {props.userFirstName}</span>
           <button className="btn" style={logOutBtnStyles}>
             Log Out
           </button>

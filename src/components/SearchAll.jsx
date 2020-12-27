@@ -9,7 +9,7 @@ const SearchAll = () => {
 
   const formStyles = {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   };
 
   const searchButtonStyles = {

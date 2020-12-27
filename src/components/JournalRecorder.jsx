@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import SideBar from "./SideBar";
-import Journal from "./Journal";
+import JournalControl from "./JournalControl";
 
 class JournalRecorder extends Component {
   state = {
@@ -13,14 +13,16 @@ class JournalRecorder extends Component {
         <div className="container-fluid px-0 h-100">
           <Header userFirstName={this.props.currentUser.firstName} />
           <div className="row h-100">
-            <div className="col-2 pr-0">
+            <div className="col-2 pe-0">
               <SideBar
                 journals={this.props.currentUser.journals}
                 currentlySelectedJournal={this.state.currentlySelectedJournal}
               />
             </div>
             <div className="col-10 bg-light">
-              <Journal currentJournal={this.state.currentlySelectedJournal} />
+              <JournalControl
+                currentJournal={this.state.currentlySelectedJournal}
+              />
             </div>
           </div>
         </div>

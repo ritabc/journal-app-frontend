@@ -35,7 +35,7 @@ const SearchOne = () => {
           <button
             style={searchButtonStyles}
             type="submit"
-            className="btn btn-sm ml-2"
+            className="btn btn-sm ms-2"
           >
             Search
           </button>

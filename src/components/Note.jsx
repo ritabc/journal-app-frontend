@@ -7,12 +7,13 @@ const Note = (props) => {
         <div className="card my-2">
           <div className="card-body">
             <div className="card-title">
-              <h4>{props.dateCreated}</h4>
+              <h4>{props.note.title}</h4>
+              <h5>{props.note.dateCreated}</h5>
             </div>
-            <p className="card-text">{props.content}</p>
+            <p className="card-text">{props.note.content}</p>
             <p className="card-text">
               <small className="text-muted">
-                Last updated {props.lastUpdated}
+                Last updated {props.note.lastUpdated}
               </small>
             </p>
           </div>
