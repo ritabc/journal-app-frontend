@@ -4,7 +4,7 @@ import NewNoteForm from "./NewNoteForm";
 
 class JournalControl extends Component {
   state = {
-    formVisibleOnPage: true,
+    formVisibleOnPage: false,
     stateNotes: [],
   };
 

@@ -1,19 +1,24 @@
 import React from "react";
 import JournalsList from "./JournalsList";
 import SearchAll from "./SearchAll";
-import NewJournalBtn from "./NewJournalBtn";
+
+const sideBarStyles = {
+  color: "#f8f9fa",
+  fontWeight: "800",
+};
+const newJournalBtnDivStyle = {
+  display: "flex",
+  justifyContent: "center",
+};
+const newJournalBtnStyle = {
+  border: "3px solid #5A2762",
+  color: "#f8f9fa",
+};
 
 const SideBar = (props) => {
-  const sideBarStyles = {
-    color: "#f8f9fa",
-    fontWeight: "800",
-  };
-
-  const newJournalBtnStyle = {
-    display: "flex",
-    justifyContent: "center",
-  };
-
+  function handleNewJournalBtnClick() {
+    props.onClickOfNewJournalBtn();
+  }
   return (
     <React.Fragment>
       <div className="bg-dark h-100" style={sideBarStyles}>
@@ -25,10 +30,18 @@ const SideBar = (props) => {
           <JournalsList
             journals={props.journals}
             currentlySelectedJournal={props.currentlySelectedJournal}
+            stateJournals={props.stateJournals}
+            onChangeCurrentJournal={props.onChangeCurrentJournal}
           />
         </div>
-        <div style={newJournalBtnStyle}>
-          <NewJournalBtn />
+        <div style={newJournalBtnDivStyle}>
+          <button
+            onClick={handleNewJournalBtnClick}
+            className="btn btn-lg px-auto"
+            style={newJournalBtnStyle}
+          >
+            + New Journal
+          </button>
         </div>
       </div>
     </React.Fragment>

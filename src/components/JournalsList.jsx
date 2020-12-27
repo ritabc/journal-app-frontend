@@ -11,8 +11,17 @@ const selectedStyle = {
 const nonSelectedStyle = {
   lineHeight: "2.5",
 };
-
+const selectedBtnStyle = { width: "100%", textAlign: "left" };
+const nonSelectedBtnStyle = {
+  color: "#f8f9fa",
+  width: "100%",
+  textAlign: "left",
+};
 const JournalsList = (props) => {
+  function handleChangeCurrentlJournal(event) {
+    props.onChangeCurrentJournal(event.target.name);
+  }
+
   return (
     <React.Fragment>
       <ul>
@@ -25,7 +34,41 @@ const JournalsList = (props) => {
             }
             key={journal.id}
           >
-            {journal.name}
+            <button
+              onClick={handleChangeCurrentlJournal}
+              className="btn"
+              name={journal.id}
+              style={
+                journal.id === props.currentlySelectedJournal.id
+                  ? selectedBtnStyle
+                  : nonSelectedBtnStyle
+              }
+            >
+              {journal.name}
+            </button>
+          </li>
+        ))}
+        {props.stateJournals.map((journal) => (
+          <li
+            style={
+              journal.id === props.currentlySelectedJournal.id
+                ? selectedStyle
+                : nonSelectedStyle
+            }
+            key={journal.id}
+          >
+            <button
+              onClick={handleChangeCurrentlJournal}
+              className="btn"
+              name={journal.id}
+              style={
+                journal.id === props.currentlySelectedJournal.id
+                  ? selectedBtnStyle
+                  : nonSelectedBtnStyle
+              }
+            >
+              {journal.name}
+            </button>
           </li>
         ))}
       </ul>
