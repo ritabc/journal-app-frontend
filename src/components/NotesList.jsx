@@ -1,5 +1,4 @@
 import React from "react";
-import NewNoteBtn from "./NewNoteBtn";
 import SearchOne from "./SearchOne";
 import Note from "./Note";
 
@@ -48,15 +47,13 @@ const NotesList = (props) => {
         <div className="row">
           {/* TODO: eventually, remove one method of storing the data. For now, work with notes from staticData.js for show, and with stateNotes for practie with passing events up and altering state that way */}
           {props.currentJournal.notes
-            .filter((note) => note.journalID == props.currentJournal.id)
+            .filter((note) => note.journalId == props.currentJournal.id)
             .map((note) => (
               <Note note={note} key={note.id} />
             ))}
-          {props.stateNotes
-            .filter((note) => note.journalID == props.currentJournal.id)
-            .map((note) => (
-              <Note note={note} key={note.id} />
-            ))}
+          {Object.keys(props.stateNotes).map((noteId) => (
+            <Note note={props.stateNotes[noteId]} key={noteId} />
+          ))}
         </div>
       </div>
     </React.Fragment>

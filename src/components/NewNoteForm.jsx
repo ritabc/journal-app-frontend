@@ -15,14 +15,14 @@ const saveNoteBtnStyles = {
 
 const NewNoteForm = (props) => {
   function handleNewNoteFormSubmission(event) {
-    // event.preventDefault();
+    event.preventDefault();
     props.onNewNoteCreation({
       dateCreated: Date.now(),
       title: event.target.title.value,
       content: event.target.content.value,
       lastUpdated: Date.now(),
       id: v4(),
-      journalID: event.target.journalID.value,
+      journalId: event.target.journalId.value,
     });
   }
 
@@ -35,7 +35,7 @@ const NewNoteForm = (props) => {
         <form onSubmit={handleNewNoteFormSubmission}>
           <input
             type="hidden"
-            name="journalID"
+            name="journalId"
             value={props.currentJournal.id}
           />
           <div className="form-floating pb-3">

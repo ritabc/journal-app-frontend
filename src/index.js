@@ -7,12 +7,21 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
+import { createStore } from "redux";
+import rootReducer from "./reducers/index";
+import { Provider } from "react-redux";
 import data from "./data/staticData";
 
+const store = createStore(rootReducer, {
+  newNoteFormVisibleOnPage: false,
+  notes: {},
+});
+store.subscribe(() => console.log(store.getState()));
+
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App data={data} />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById("root")
 );
 

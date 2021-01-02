@@ -15,7 +15,7 @@ let data = {
               content:
                 "Saw the family outdoors to celebrate the Christmas holiday. It was chilly but...",
               lastUpdated: "1 day ago",
-              journalID: 1,
+              journalId: 1,
             },
             {
               id: 2,
@@ -24,7 +24,7 @@ let data = {
               content:
                 "Gave the dog her heartworm medicine and her flea/tick med...",
               lastUpdated: "3 minutes ago",
-              journalID: 1,
+              journalId: 1,
             },
             {
               id: 3,
@@ -33,7 +33,7 @@ let data = {
               content:
                 "Dressed the dog as a horse for halloween. She was a good sport about it...",
               lastUpdated: "2 weeks ago",
-              journalID: 1,
+              journalId: 1,
             },
             {
               id: 4,
@@ -42,7 +42,7 @@ let data = {
               content:
                 "Adopted the new dog! She is tiny (8lbs!) and very playful. She was adopted from...",
               lastUpdated: "3 minutes ago",
-              journalID: 1,
+              journalId: 1,
             },
             {
               id: 5,
@@ -51,7 +51,7 @@ let data = {
               content:
                 "Saw the family outdoors to celebrate the Christmas holiday. It was chilly but...",
               lastUpdated: "1 day ago",
-              journalID: 1,
+              journalId: 1,
             },
             {
               id: 6,
@@ -60,7 +60,7 @@ let data = {
               content:
                 "Gave the dog her heartworm medicine and her flea/tick med...",
               lastUpdated: "3 minutes ago",
-              journalID: 1,
+              journalId: 1,
             },
             {
               id: 7,
@@ -69,7 +69,7 @@ let data = {
               content:
                 "Dressed the dog as a horse for halloween. She was a good sport about it...",
               lastUpdated: "2 weeks ago",
-              journalID: 1,
+              journalId: 1,
             },
             {
               id: 8,
@@ -78,7 +78,7 @@ let data = {
               content:
                 "Adopted the new dog! She is tiny (8lbs!) and very playful. She was adopted from...",
               lastUpdated: "3 minutes ago",
-              journalID: 1,
+              journalId: 1,
             },
           ],
         },
