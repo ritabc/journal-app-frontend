@@ -23,9 +23,20 @@ const NotesList = (props) => {
   function handleNewNoteBtnClick() {
     props.onClickOfNewNoteBtn();
   }
+  let currentlyVisible;
 
-  return (
-    <React.Fragment>
+  if (props.currentJournal == null) {
+    currentlyVisible = (
+      <div className="container-fluid">
+        <div style={headerStyle} className="py-3">
+          <div style={titleNewStyle}>
+            <h2 style={titleStyle}>No Journals Yet. Add one!</h2>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    currentlyVisible = (
       <div className="container-fluid">
         <div style={headerStyle} className="py-3">
           <div style={titleNewStyle}>
@@ -45,19 +56,15 @@ const NotesList = (props) => {
           </div>
         </div>
         <div className="row">
-          {/* TODO: eventually, remove one method of storing the data. For now, work with notes from staticData.js for show, and with stateNotes for practie with passing events up and altering state that way */}
-          {props.currentJournal.notes
-            .filter((note) => note.journalId == props.currentJournal.id)
-            .map((note) => (
-              <Note note={note} key={note.id} />
-            ))}
           {Object.keys(props.stateNotes).map((noteId) => (
             <Note note={props.stateNotes[noteId]} key={noteId} />
           ))}
         </div>
       </div>
-    </React.Fragment>
-  );
+    );
+  }
+
+  return <React.Fragment>{currentlyVisible}</React.Fragment>;
 };
 
 export default NotesList;

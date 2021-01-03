@@ -28,7 +28,6 @@ const SideBar = (props) => {
         </div>
         <div className="py-4">
           <JournalsList
-            journals={props.journals}
             currentlySelectedJournal={props.currentlySelectedJournal}
             stateJournals={props.stateJournals}
             onChangeCurrentJournal={props.onChangeCurrentJournal}

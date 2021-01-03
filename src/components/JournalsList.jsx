@@ -1,4 +1,5 @@
 import React from "react";
+var fp = require("lodash/fp");
 
 const selectedStyle = {
   color: "#343a40",
@@ -18,59 +19,40 @@ const nonSelectedBtnStyle = {
   textAlign: "left",
 };
 const JournalsList = (props) => {
-  function handleChangeCurrentlJournal(event) {
+  function handleChangeCurrentJournal(event) {
+    console.log(event.target.name);
     props.onChangeCurrentJournal(event.target.name);
   }
 
   return (
     <React.Fragment>
       <ul>
-        {props.journals.map((journal) => (
-          <li
-            style={
-              journal.id === props.currentlySelectedJournal.id
-                ? selectedStyle
-                : nonSelectedStyle
-            }
-            key={journal.id}
-          >
-            <button
-              onClick={handleChangeCurrentlJournal}
-              className="btn"
-              name={journal.id}
+        {Object.values(props.stateJournals).map((journal) => {
+          console.log(journal);
+          return (
+            <li
               style={
                 journal.id === props.currentlySelectedJournal.id
-                  ? selectedBtnStyle
-                  : nonSelectedBtnStyle
+                  ? selectedStyle
+                  : nonSelectedStyle
               }
+              key={journal.id}
             >
-              {journal.name}
-            </button>
-          </li>
-        ))}
-        {props.stateJournals.map((journal) => (
-          <li
-            style={
-              journal.id === props.currentlySelectedJournal.id
-                ? selectedStyle
-                : nonSelectedStyle
-            }
-            key={journal.id}
-          >
-            <button
-              onClick={handleChangeCurrentlJournal}
-              className="btn"
-              name={journal.id}
-              style={
-                journal.id === props.currentlySelectedJournal.id
-                  ? selectedBtnStyle
-                  : nonSelectedBtnStyle
-              }
-            >
-              {journal.name}
-            </button>
-          </li>
-        ))}
+              <button
+                onClick={handleChangeCurrentJournal}
+                className="btn"
+                name={journal.id}
+                style={
+                  journal.id === props.currentlySelectedJournal.id
+                    ? selectedBtnStyle
+                    : nonSelectedBtnStyle
+                }
+              >
+                {journal.name}
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </React.Fragment>
   );

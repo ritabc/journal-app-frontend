@@ -15,6 +15,8 @@ import data from "./data/staticData";
 const store = createStore(rootReducer, {
   newNoteFormVisibleOnPage: false,
   notes: {},
+  journals: {},
+  selectedJournal: null,
 });
 store.subscribe(() => console.log(store.getState()));
 

@@ -4,7 +4,10 @@ import SideBar from "./SideBar";
 import JournalControl from "./JournalControl";
 import Modal from "react-modal";
 import { v4, validate as uuidValidate } from "uuid";
+import { connect } from "react-redux";
+import * as a from "../actions";
 
+var fp = require("lodash/fp");
 Modal.setAppElement("#root");
 const createJournalBtnStyles = { border: "3px solid #5A2762" };
 
@@ -21,44 +24,39 @@ const modalStyles = {
 
 class JournalRecorder extends Component {
   state = {
-    currentlySelectedJournal: this.props.currentUser.journals[0],
     isNewJournalModalVisible: false,
-    stateJournals: [],
   };
 
   handleRequestToCreateJournal = () => {
     this.setState({ isNewJournalModalVisible: true });
   };
 
-  handleChangeCurrentlyJournal = (id) => {
-    let newCurrentJournal;
-    if (uuidValidate(id)) {
-      newCurrentJournal = this.state.stateJournals.filter(
-        (journal) => journal.id == id
-      )[0];
-    } else {
-      newCurrentJournal = this.props.currentUser.journals.filter(
-        (journal) => journal.id == id
-      )[0];
-    }
-    this.setState({
-      currentlySelectedJournal: newCurrentJournal,
-    });
+  handleChangeCurrentJournal = (id) => {
+    const { dispatch } = this.props;
+    const newSelectedJournalId = Object.keys(this.props.journals).find(
+      (journalId) => journalId === id
+    );
+    const changeJournalAction = a.changeJournal(
+      this.props.journals[newSelectedJournalId]
+    );
+    dispatch(changeJournalAction);
   };
 
   handleCreateJournal = (event) => {
     // event.preventDefault();
-    const newJournalID = v4();
+    const { dispatch } = this.props;
+    const newJournalId = v4();
     const newJournal = {
-      id: newJournalID,
+      id: newJournalId,
       name: event.target.name.value,
       notes: [],
     };
-    const newStateJournalsList = [...this.state.stateJournals, newJournal];
+    const newJournalAction = a.addJournal(newJournal);
+    dispatch(newJournalAction);
+    const changeJournalAction = a.changeJournal(newJournal);
+    dispatch(changeJournalAction);
     this.setState({
-      stateJournals: newStateJournalsList,
       isNewJournalModalVisible: false,
-      currentlySelectedJournal: newJournal,
     });
   };
 
@@ -97,17 +95,14 @@ class JournalRecorder extends Component {
           <div className="row h-100">
             <div className="col-2 pe-0">
               <SideBar
-                journals={this.props.currentUser.journals}
-                currentlySelectedJournal={this.state.currentlySelectedJournal}
-                stateJournals={this.state.stateJournals}
+                currentlySelectedJournal={this.props.selectedJournal}
+                stateJournals={this.props.journals}
                 onClickOfNewJournalBtn={this.handleRequestToCreateJournal}
-                onChangeCurrentJournal={this.handleChangeCurrentlyJournal}
+                onChangeCurrentJournal={this.handleChangeCurrentJournal}
               />
             </div>
             <div className="col-10 bg-light">
-              <JournalControl
-                currentJournal={this.state.currentlySelectedJournal}
-              />
+              <JournalControl currentJournal={this.props.selectedJournal} />
             </div>
           </div>
         </div>
@@ -116,5 +111,14 @@ class JournalRecorder extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    journals: state.journals,
+    selectedJournal: state.selectedJournal,
+  };
+};
+
+JournalRecorder = connect(mapStateToProps)(JournalRecorder);
 
 export default JournalRecorder;

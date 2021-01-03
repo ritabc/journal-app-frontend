@@ -4,6 +4,8 @@ import noteListReducer from "../../reducers/note-list-reducer";
 import newNoteFormVisibleOnPageReducer from "../../reducers/new-note-form-visible-on-page-reducer";
 import { v4 } from "uuid";
 import * as c from "./../../actions/ActionTypes";
+import journalListReducer from "../../reducers/journal-list-reducer";
+import currentlySelectedJournalReducer from "../../reducers/currently-selected-journal-reducer";
 
 let store = createStore(rootReducer);
 
@@ -12,6 +14,8 @@ describe("rootReducer", () => {
     expect(rootReducer({}, { type: null })).toEqual({
       notes: {},
       newNoteFormVisibleOnPage: false,
+      journals: {},
+      selectedJournal: {},
     });
   });
 
@@ -24,6 +28,18 @@ describe("rootReducer", () => {
   test("Check that initial state of newNoteFormVisibileOnPageReducer matches root reducer", () => {
     expect(store.getState().newNoteFormVisibleOnPage).toEqual(
       newNoteFormVisibleOnPageReducer(undefined, { type: null })
+    );
+  });
+
+  test("Check that initial state of journals matches root reducer", () => {
+    expect(store.getState().journals).toEqual(
+      journalListReducer(undefined, { type: null })
+    );
+  });
+
+  test("Check that initial state of selectedJournal matches root reducer", () => {
+    expect(store.getState().selectedJournal).toEqual(
+      currentlySelectedJournalReducer(undefined, { type: null })
     );
   });
 
@@ -45,6 +61,32 @@ describe("rootReducer", () => {
     store.dispatch(action);
     expect(store.getState().newNoteFormVisibleOnPage).toEqual(
       newNoteFormVisibleOnPageReducer(undefined, action)
+    );
+  });
+
+  test("Check that ADD_JOURNAL action works for journalListReducer and root reducer", () => {
+    const action = {
+      type: c.ADD_JOURNAL,
+      name: "Funny Dog Memes",
+      id: v4(),
+      notes: [],
+    };
+    store.dispatch(action);
+    expect(store.getState().journals).toEqual(
+      journalListReducer(undefined, action)
+    );
+  });
+
+  test("Check that CHANGE_JOURNAL action works for journalListReducer and root reducer", () => {
+    const action = {
+      type: c.CHANGE_JOURNAL,
+      name: "Funny Dog Memes",
+      id: v4(),
+      notes: [],
+    };
+    store.dispatch(action);
+    expect(store.getState().selectedJournal).toEqual(
+      currentlySelectedJournalReducer(undefined, action)
     );
   });
 });
