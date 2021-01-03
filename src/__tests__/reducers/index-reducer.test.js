@@ -6,6 +6,7 @@ import { v4 } from "uuid";
 import * as c from "./../../actions/ActionTypes";
 import journalListReducer from "../../reducers/journal-list-reducer";
 import currentlySelectedJournalReducer from "../../reducers/currently-selected-journal-reducer";
+import newJournalModalVisibleReducer from "../../reducers/new-journal-modal-visible-reducer";
 
 let store = createStore(rootReducer);
 
@@ -16,6 +17,7 @@ describe("rootReducer", () => {
       newNoteFormVisibleOnPage: false,
       journals: {},
       selectedJournal: {},
+      newJournalModalVisible: false,
     });
   });
 
@@ -40,6 +42,12 @@ describe("rootReducer", () => {
   test("Check that initial state of selectedJournal matches root reducer", () => {
     expect(store.getState().selectedJournal).toEqual(
       currentlySelectedJournalReducer(undefined, { type: null })
+    );
+  });
+
+  test("Check that initial state of newJournalModalVisible matches root reducer", () => {
+    expect(store.getState().newJournalModalVisible).toEqual(
+      newJournalModalVisibleReducer(undefined, { type: null })
     );
   });
 
@@ -87,6 +95,16 @@ describe("rootReducer", () => {
     store.dispatch(action);
     expect(store.getState().selectedJournal).toEqual(
       currentlySelectedJournalReducer(undefined, action)
+    );
+  });
+
+  test("Check that TOGGLE_NEW_JOURNAL_MODAL action works for journalListReducer and root reducer", () => {
+    const action = {
+      type: c.TOGGLE_NEW_JOURNAL_MODAL,
+    };
+    store.dispatch(action);
+    expect(store.getState().newJournalModalVisible).toEqual(
+      newJournalModalVisibleReducer(undefined, action)
     );
   });
 });

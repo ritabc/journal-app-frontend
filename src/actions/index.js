@@ -36,3 +36,7 @@ export const changeJournal = (journal) => {
     notes,
   };
 };
+
+export const togggleNewJournalModal = () => ({
+  type: c.TOGGLE_NEW_JOURNAL_MODAL,
+});

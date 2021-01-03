@@ -1,0 +1,42 @@
+[
+  {
+    "id": 15,
+    "name": "Recipes",
+    "description": null,
+    "created_at": "2021-01-03T02:19:32.108Z",
+    "updated_at": "2021-01-03T02:19:32.108Z",
+    "user_id": 19
+  },
+  {
+    "id": 16,
+    "name": "Daily Notes",
+    "description": null,
+    "created_at": "2021-01-03T02:19:32.948Z",
+    "updated_at": "2021-01-03T02:19:32.948Z",
+    "user_id": 19
+  },
+  {
+    "id": 17,
+    "name": "Dream Diary",
+    "description": null,
+    "created_at": "2021-01-03T02:19:33.535Z",
+    "updated_at": "2021-01-03T02:19:33.535Z",
+    "user_id": 19
+  },
+  {
+    "id": 18,
+    "name": "Introspective Notes",
+    "description": null,
+    "created_at": "2021-01-03T02:19:33.631Z",
+    "updated_at": "2021-01-03T02:19:33.631Z",
+    "user_id": 19
+  },
+  {
+    "id": 19,
+    "name": "Travel Notes",
+    "description": null,
+    "created_at": "2021-01-03T02:19:33.748Z",
+    "updated_at": "2021-01-03T02:19:33.748Z",
+    "user_id": 19
+  }
+]

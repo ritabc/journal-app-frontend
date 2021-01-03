@@ -3,11 +3,10 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import JournalControl from "./JournalControl";
 import Modal from "react-modal";
-import { v4, validate as uuidValidate } from "uuid";
+import { v4 } from "uuid";
 import { connect } from "react-redux";
 import * as a from "../actions";
 
-var fp = require("lodash/fp");
 Modal.setAppElement("#root");
 const createJournalBtnStyles = { border: "3px solid #5A2762" };
 
@@ -23,12 +22,10 @@ const modalStyles = {
 };
 
 class JournalRecorder extends Component {
-  state = {
-    isNewJournalModalVisible: false,
-  };
-
   handleRequestToCreateJournal = () => {
-    this.setState({ isNewJournalModalVisible: true });
+    const { dispatch } = this.props;
+    const showNewJournalModalAction = a.togggleNewJournalModal();
+    dispatch(showNewJournalModalAction);
   };
 
   handleChangeCurrentJournal = (id) => {
@@ -52,19 +49,19 @@ class JournalRecorder extends Component {
       notes: [],
     };
     const newJournalAction = a.addJournal(newJournal);
-    dispatch(newJournalAction);
     const changeJournalAction = a.changeJournal(newJournal);
+    const hideNewJournalModalAction = a.togggleNewJournalModal();
+
+    dispatch(newJournalAction);
     dispatch(changeJournalAction);
-    this.setState({
-      isNewJournalModalVisible: false,
-    });
+    dispatch(hideNewJournalModalAction);
   };
 
   render() {
     let modal = null;
-    if (this.state.isNewJournalModalVisible) {
+    if (this.props.newJournalModalVisible) {
       modal = (
-        <Modal isOpen={this.state.isNewJournalModalVisible} style={modalStyles}>
+        <Modal isOpen={this.props.newJournalModalVisible} style={modalStyles}>
           <h2>Create a Journal</h2>
           <form onSubmit={this.handleCreateJournal}>
             <div className="form-floating">
@@ -116,6 +113,7 @@ const mapStateToProps = (state) => {
   return {
     journals: state.journals,
     selectedJournal: state.selectedJournal,
+    newJournalModalVisible: state.newJournalModalVisible,
   };
 };
 

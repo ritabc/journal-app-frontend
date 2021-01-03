@@ -1,5 +1,4 @@
 import React from "react";
-var fp = require("lodash/fp");
 
 const selectedStyle = {
   color: "#343a40",
