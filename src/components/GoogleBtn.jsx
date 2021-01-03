@@ -15,30 +15,30 @@ class GoogleBtn extends Component {
     };
   }
 
-  login = (response) => {
-    if (response.accessToken) {
-      this.setState((state) => ({
-        isLoggedIn: true,
-        accessToken: response.accessToken,
-        tokenId: response.tokenId,
-        profileObj: response.profileObj,
-      }));
-    }
-  };
+  //   login = (response) => {
+  //     if (response.accessToken) {
+  //       this.setState((state) => ({
+  //         isLoggedIn: true,
+  //         accessToken: response.accessToken,
+  //         tokenId: response.tokenId,
+  //         profileObj: response.profileObj,
+  //       }));
+  //     }
+  //   };
 
-  logout = (response) => {
-    this.setState((state) => ({
-      isLoggedIn: false,
-      accessToken: "",
-      tokenId: "",
-      profileObj: {},
-    }));
-  };
+  //   logout = (response) => {
+  //     this.setState((state) => ({
+  //       isLoggedIn: false,
+  //       accessToken: "",
+  //       tokenId: "",
+  //       profileObj: {},
+  //     }));
+  //   };
 
-  handleLoginFailure = (response) => {
-    console.log(response);
-    alert("Failed to log in");
-  };
+  //   handleLoginFailure = (response) => {
+  //     console.log(response);
+  //     alert("Failed to log in");
+  //   };
 
   handleLogoutFailure = (response) => {
     alert("Failed to log out");

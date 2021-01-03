@@ -6,8 +6,7 @@ import Modal from "react-modal";
 import { v4 } from "uuid";
 import { connect } from "react-redux";
 import * as a from "../actions";
-import GoogleBtn from "./GoogleBtn";
-import { findByLabelText } from "@testing-library/react";
+import GoogleLogIn from "./GoogleLogIn";
 
 Modal.setAppElement("#root");
 const createJournalBtnStyles = { border: "3px solid #5A2762" };
@@ -106,13 +105,14 @@ class JournalRecorder extends Component {
       //   TODO : should be currentUser.givenName + familyName
       userName = "Rita BC";
     } else {
+      console.log(this.props.googleSignInToken);
       body = (
         <div style={logInStylesContainer} className="h-100">
           <div style={logInStyles}>
             <div style={innerBorderStyles} className="p-5">
               <h2>Log In With Google</h2>
               <div style={googleSignInStyles} className="pt-2">
-                <GoogleBtn />
+                <GoogleLogIn />
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@ class JournalRecorder extends Component {
     return (
       <React.Fragment>
         <div className="container-fluid px-0 h-100">
-          <Header userFirstName={userName} />
+          <Header currentUser={{}} />
           {body}
         </div>
         {modal}
