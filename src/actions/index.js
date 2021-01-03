@@ -40,3 +40,12 @@ export const changeJournal = (journal) => {
 export const togggleNewJournalModal = () => ({
   type: c.TOGGLE_NEW_JOURNAL_MODAL,
 });
+
+export const googleSignInSuccess = (googleToken) => ({
+  type: c.GOOGLE_SIGN_IN_SUCCESS,
+  googleToken,
+});
+
+export const googleSignOutSuccess = () => ({
+  type: c.GOOGLE_SIGN_OUT_SUCCESS,
+});

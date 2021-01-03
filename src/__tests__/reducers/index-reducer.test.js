@@ -18,6 +18,7 @@ describe("rootReducer", () => {
       journals: {},
       selectedJournal: {},
       newJournalModalVisible: false,
+      googleSignInToken: {},
     });
   });
 

@@ -17,6 +17,7 @@ const store = createStore(rootReducer, {
   notes: {},
   journals: {},
   selectedJournal: null,
+  googleSignInToken: {},
 });
 store.subscribe(() => console.log(store.getState()));
 
