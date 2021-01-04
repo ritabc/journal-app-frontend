@@ -10,17 +10,15 @@ const Header = (props) => {
   const titleStyles = {
     // color: "#f8f9fa",
   };
-
-  const logOutBtnStyles = {
-    color: "#f8f9fa",
-    border: "3px solid #5A2762",
-    borderRadius: "10px",
+  const loggedInLogOutStyles = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   };
 
-  const innerBorderStyles = {
-    border: "6px solid #212529",
-    borderRadius: "10px",
-    backgroundColor: "#f8f9fa",
+  const welcomeStyles = {
+    fontSize: "large",
+    fontWeight: "500",
   };
 
   let currentUserWelcome = null;
@@ -30,18 +28,15 @@ const Header = (props) => {
     currentUserWelcome = (
       <span className="me-3">Logged In As {props.currentUser.givenName}</span>
     );
-  } else {
     logOutBtn = <GoogleLogOut />;
   }
   return (
     <React.Fragment>
       <div className="bg-dark py-3 px-3 mb-0" style={headerStyles}>
         <h1 style={titleStyles}>JournalRecorder</h1>
-        <div className="my-auto">
-          {currentUserWelcome}
-          <div style={logOutBtnStyles}>
-            <div style={innerBorderStyles}>{logOutBtn}</div>
-          </div>
+        <div className="my-auto" style={loggedInLogOutStyles}>
+          <div style={welcomeStyles}>{currentUserWelcome}</div>
+          <div>{logOutBtn}</div>
         </div>
       </div>
     </React.Fragment>

@@ -5,6 +5,8 @@ import noteListReducer from "./note-list-reducer";
 import currentlySelectedJournalReducer from "./currently-selected-journal-reducer";
 import newJournalModalVisibleReducer from "./new-journal-modal-visible-reducer";
 import googleSignInReducer from "./google-sign-in-reducer";
+import authenticationStatusChangeIsCompleteReducer from "./authentication-status-change-is-complete-reducer";
+import currentUserReducer from "./current-user-reducer";
 
 const rootReducer = combineReducers({
   newNoteFormVisibleOnPage: newNoteFormVisibleOnPageReducer,
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
   selectedJournal: currentlySelectedJournalReducer,
   newJournalModalVisible: newJournalModalVisibleReducer,
   googleSignInToken: googleSignInReducer,
+  authenticationStatusChangeIsComplete: authenticationStatusChangeIsCompleteReducer,
+  currentUser: currentUserReducer,
 });
 
 export default rootReducer;

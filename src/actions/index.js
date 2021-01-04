@@ -49,3 +49,23 @@ export const googleSignInSuccess = (googleToken) => ({
 export const googleSignOutSuccess = () => ({
   type: c.GOOGLE_SIGN_OUT_SUCCESS,
 });
+
+export const toggleAuthenticationStatusChangeIsComplete = () => ({
+  type: c.AUTHENTICATION_STATUS_CHANGE_IS_COMPLETE,
+});
+
+export const addCurrentUser = (currentUser) => {
+  const { givenName, familyName, userId, email, jwt } = currentUser;
+  return {
+    type: c.ADD_CURRENT_USER,
+    givenName,
+    familyName,
+    userId,
+    email,
+    jwt,
+  };
+};
+
+export const removeCurrentUser = () => ({
+  type: c.REMOVE_CURRENT_USER,
+});

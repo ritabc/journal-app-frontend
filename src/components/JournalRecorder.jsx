@@ -84,8 +84,8 @@ class JournalRecorder extends Component {
 
   render() {
     let body;
-    let userName = "";
-    if (false) {
+    let userName;
+    if ("jwt" in this.props.currentUser) {
       // TODO: Should say: If currentUser is not nil
       body = (
         <div className="row h-100">
@@ -103,9 +103,8 @@ class JournalRecorder extends Component {
         </div>
       );
       //   TODO : should be currentUser.givenName + familyName
-      userName = "Rita BC";
+      userName = `${this.props.currentUser.givenName} ${this.props.currentUser.familyName}`;
     } else {
-      console.log(this.props.googleSignInToken);
       body = (
         <div style={logInStylesContainer} className="h-100">
           <div style={logInStyles}>
@@ -149,7 +148,7 @@ class JournalRecorder extends Component {
     return (
       <React.Fragment>
         <div className="container-fluid px-0 h-100">
-          <Header currentUser={{}} />
+          <Header currentUser={this.props.currentUser} />
           {body}
         </div>
         {modal}
@@ -164,6 +163,7 @@ const mapStateToProps = (state) => {
     selectedJournal: state.selectedJournal,
     newJournalModalVisible: state.newJournalModalVisible,
     googleSignInToken: state.googleSignInToken,
+    currentUser: state.currentUser,
   };
 };
 
