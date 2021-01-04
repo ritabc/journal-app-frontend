@@ -17,6 +17,16 @@ const newJournalBtnStyle = {
   color: "#f8f9fa",
 };
 
+//
+// const { dispatch } = this.props;
+// console.log(this.props.journals);
+// console.log(this.props.journals[Object.keys(this.props.journals)[0]]);
+// const selectFirstJournalAction = a.changeJournal(
+//   this.props.journals[Object.keys(this.props.journals)[0]]
+// );
+// dispatch(selectFirstJournalAction);
+//
+
 const HOST = `${process.env.REACT_APP_DEV_API_HOST}`;
 
 const getJournalsFromAPI = () => {
@@ -31,6 +41,18 @@ const getJournalsFromAPI = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(a.getJournalsSuccess(response));
+        console.log(
+          getState().journals.journals[
+            Object.keys(getState().journals.journals)[0]
+          ]
+        );
+        dispatch(
+          a.changeJournal(
+            getState().journals.journals[
+              Object.keys(getState().journals.journals)[0]
+            ]
+          )
+        );
       })
       .catch((error) => {
         dispatch(a.getJournalsFailure(error));
@@ -39,6 +61,16 @@ const getJournalsFromAPI = () => {
 };
 
 class SideBar extends React.Component {
+  //   constructor(props) {
+  //     super(props);
+  //     const { dispatch } = props;
+  //     console.log(props.stateJournals);
+  //     // // select a first Journal to be selected
+  //     // TODO: maybe do this in componentDidMount
+  //     dispatch(
+  //       a.changeJournal(props.stateJournals[Object.keys(props.stateJournals)[0]])
+  //     );
+  //   }
   handleNewJournalBtnClick() {
     this.props.onClickOfNewJournalBtn();
   }
@@ -49,6 +81,7 @@ class SideBar extends React.Component {
   }
 
   render() {
+    console.log(this.props.stateJournals);
     return (
       <React.Fragment>
         <div className="bg-dark h-100" style={sideBarStyles}>
@@ -60,7 +93,7 @@ class SideBar extends React.Component {
             <JournalsList
               currentlySelectedJournal={this.props.currentlySelectedJournal}
               //   stateJournals={stateJournals}
-              stateJournals={this.props.journals}
+              stateJournals={this.props.stateJournals}
               onChangeCurrentJournal={this.props.onChangeCurrentJournal}
             />
           </div>
@@ -81,9 +114,10 @@ class SideBar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    journals: state.journals.journals,
+    // journals: state.journals.journals,
     isLoading: state.journals.isLoading,
     error: state.journals.error,
+    currentlySelectedJournal: state.selectedJournal,
   };
 };
 

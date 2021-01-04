@@ -1,41 +1,67 @@
 import React, { Component } from "react";
-import GoogleBtn from "./GoogleBtn";
 import JournalRecorder from "./JournalRecorder";
 import { connect } from "react-redux";
+import GoogleLogIn from "./GoogleLogIn";
+import Header from "./Header";
+
+const logInStylesContainer = {
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "#212529",
+};
+
+const logInStyles = {
+  border: "10px solid #5A2762",
+  borderRadius: "15px",
+  backgroundColor: "#212529",
+};
+
+const innerBorderStyles = {
+  border: "15px solid #212529",
+  borderRadius: "15px",
+  backgroundColor: "#f8f9fa",
+};
+
+const googleSignInStyles = {
+  display: "flex",
+  justifyContent: "space-around",
+};
 
 class App extends Component {
-  state = {
-    // loggedIn: false,
-    // currentUser: "Rita",
-  };
-
   render() {
-    // let currentlyVisible = null;
-    // let currentUserExistsInData = false;
-    // let currentUsersData = null;
-    // for (let i = 0; i < this.props.data.users.length; i++) {
-    //   let user = this.props.data.users[i];
-    //   if (this.state.currentUser === user.firstName) {
-    //     currentUserExistsInData = true;
-    //     currentUsersData = user;
-    //   }
-    // }
-    // if (this.state.loggedIn && currentUserExistsInData) {
-    //   currentlyVisible = <JournalRecorder currentUser={currentUsersData} />;
-    // } else {
-    //   currentlyVisible = <GoogleBtn />;
-    // }
-    // return (
-    //   <React.Fragment>
-    //     <div className="h-100">{currentlyVisible}</div>
-    //   </React.Fragment>
-    // );
+    let display = null;
+    if ("jwt" in this.props.currentUser) {
+      display = <JournalRecorder />;
+    } else {
+      display = (
+        <div style={logInStylesContainer} className="h-100">
+          <div style={logInStyles}>
+            <div style={innerBorderStyles} className="p-5">
+              <h2>Log In With Google</h2>
+              <div style={googleSignInStyles} className="pt-2">
+                <GoogleLogIn />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <React.Fragment>
-        <JournalRecorder />
+        <div className="container-fluid px-0 h-100">
+          <Header currentUser={this.props.currentUser} />
+          {display}
+        </div>
       </React.Fragment>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.currentUser,
+  };
+};
+
+export default connect(mapStateToProps)(App);

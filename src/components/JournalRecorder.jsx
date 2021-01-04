@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import Header from "./Header";
 import SideBar from "./SideBar";
 import JournalControl from "./JournalControl";
 import Modal from "react-modal";
 import { v4 } from "uuid";
 import { connect } from "react-redux";
 import * as a from "../actions";
-import GoogleLogIn from "./GoogleLogIn";
 
 Modal.setAppElement("#root");
 const createJournalBtnStyles = { border: "3px solid #5A2762" };
@@ -22,40 +20,7 @@ const modalStyles = {
   },
 };
 
-const logInStylesContainer = {
-  display: "flex",
-  justifyContent: "space-around",
-  alignItems: "center",
-  backgroundColor: "#212529",
-};
-
-const logInStyles = {
-  border: "10px solid #5A2762",
-  borderRadius: "15px",
-  backgroundColor: "#212529",
-};
-
-const innerBorderStyles = {
-  border: "15px solid #212529",
-  borderRadius: "15px",
-  backgroundColor: "#f8f9fa",
-};
-
-const googleSignInStyles = {
-  display: "flex",
-  justifyContent: "space-around",
-};
-
 class JournalRecorder extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    console.log(this.props.journals);
-    const selectFirstJournalAction = a.changeJournal(
-      this.props.journals[Object.keys(this.props.journals)[0]]
-    );
-    dispatch(selectFirstJournalAction);
-  }
-
   handleRequestToCreateJournal = () => {
     const { dispatch } = this.props;
     const showNewJournalModalAction = a.togggleNewJournalModal();
@@ -70,7 +35,7 @@ class JournalRecorder extends Component {
     );
     console.log(newSelectedJournalId);
     const changeJournalAction = a.changeJournal(
-      this.props.journals.jour[newSelectedJournalId]
+      this.props.journals[newSelectedJournalId]
     );
     dispatch(changeJournalAction);
   };
@@ -94,41 +59,6 @@ class JournalRecorder extends Component {
   };
 
   render() {
-    let body;
-    let userName;
-    if ("jwt" in this.props.currentUser) {
-      // TODO: Should say: If currentUser is not nil
-      body = (
-        <div className="row h-100">
-          <div className="col-2 pe-0">
-            <SideBar
-              currentlySelectedJournal={this.props.selectedJournal}
-              stateJournals={this.props.journals}
-              onClickOfNewJournalBtn={this.handleRequestToCreateJournal}
-              onChangeCurrentJournal={this.handleChangeCurrentJournal}
-            />
-          </div>
-          <div className="col-10 bg-light">
-            <JournalControl currentJournal={this.props.selectedJournal} />
-          </div>
-        </div>
-      );
-      //   TODO : should be currentUser.givenName + familyName
-      userName = `${this.props.currentUser.givenName} ${this.props.currentUser.familyName}`;
-    } else {
-      body = (
-        <div style={logInStylesContainer} className="h-100">
-          <div style={logInStyles}>
-            <div style={innerBorderStyles} className="p-5">
-              <h2>Log In With Google</h2>
-              <div style={googleSignInStyles} className="pt-2">
-                <GoogleLogIn />
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
     let modal = null;
     if (this.props.newJournalModalVisible) {
       modal = (
@@ -158,9 +88,20 @@ class JournalRecorder extends Component {
     }
     return (
       <React.Fragment>
-        <div className="container-fluid px-0 h-100">
-          <Header currentUser={this.props.currentUser} />
-          {body}
+        <div className="row h-100">
+          <div className="col-2 pe-0">
+            <SideBar
+              //   currentlySelectedJournal={this.props.selectedJournal}
+              stateJournals={this.props.journals}
+              onClickOfNewJournalBtn={this.handleRequestToCreateJournal}
+              onChangeCurrentJournal={this.handleChangeCurrentJournal}
+            />
+          </div>
+          <div className="col-10 bg-light">
+            <JournalControl
+            // currentJournal={this.props.selectedJournal}
+            />
+          </div>
         </div>
         {modal}
       </React.Fragment>
@@ -173,10 +114,10 @@ const mapStateToProps = (state) => {
     journals: state.journals.journals,
     journalsIsLoading: state.journals.isLoading,
     getJournalsError: state.journals.error,
-    selectedJournal: state.selectedJournal,
+    // selectedJournal: state.selectedJournal,
     newJournalModalVisible: state.newJournalModalVisible,
     googleSignInToken: state.googleSignInToken,
-    currentUser: state.currentUser,
+    // currentUser: state.currentUser,
   };
 };
 

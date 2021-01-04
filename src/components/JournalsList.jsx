@@ -18,20 +18,27 @@ const nonSelectedBtnStyle = {
   textAlign: "left",
 };
 const JournalsList = (props) => {
+  console.log(props.stateJournals);
+  console.log(props.currentlySelectedJournal);
+
   function handleChangeCurrentJournal(event) {
     console.log(event.target.name);
     props.onChangeCurrentJournal(event.target.name);
   }
 
-  return (
-    <React.Fragment>
+  let list = null;
+  if (
+    props.stateJournals.length !== 0 &&
+    props.currentlySelectedJournal !== null
+  ) {
+    list = (
       <ul>
         {Object.values(props.stateJournals).map((journal) => {
           console.log(journal);
           return (
             <li
               style={
-                journal.journalId === props.currentlySelectedJournal.id
+                journal.journalId === props.currentlySelectedJournal.journalId
                   ? selectedStyle
                   : nonSelectedStyle
               }
@@ -42,7 +49,7 @@ const JournalsList = (props) => {
                 className="btn"
                 name={journal.journalId}
                 style={
-                  journal.journalId === props.currentlySelectedJournal.id
+                  journal.journalId === props.currentlySelectedJournal.journalId
                     ? selectedBtnStyle
                     : nonSelectedBtnStyle
                 }
@@ -53,8 +60,9 @@ const JournalsList = (props) => {
           );
         })}
       </ul>
-    </React.Fragment>
-  );
+    );
+  }
+  return <React.Fragment>{list}</React.Fragment>;
 };
 
 export default JournalsList;

@@ -6,7 +6,7 @@ describe("currentlySelectedJournalReducer", () => {
   let action;
   const journalData = {
     name: "Funny Dog Memes",
-    id: v4(),
+    journalId: v4(),
     notes: [],
   };
 
@@ -15,15 +15,15 @@ describe("currentlySelectedJournalReducer", () => {
   });
 
   test("Should successfully change currentlySelectedJournal", () => {
-    const { name, id, notes } = journalData;
+    const { name, journalId, notes } = journalData;
     action = {
       type: c.CHANGE_JOURNAL,
       name,
-      id,
+      journalId,
       notes,
     };
     expect(currentlySelectedJournalReducer({}, action)).toEqual({
-      id,
+      journalId,
       name,
       notes,
     });

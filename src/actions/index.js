@@ -29,11 +29,11 @@ export const addJournal = (journal) => {
 
 export const changeJournal = (journal) => {
   console.log(journal);
-  const { name, id, notes } = journal;
+  const { name, journalId, notes } = journal;
   return {
     type: c.CHANGE_JOURNAL,
     name,
-    id,
+    journalId,
     notes,
   };
 };

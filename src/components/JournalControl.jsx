@@ -49,6 +49,7 @@ const mapStateToProps = (state) => {
   return {
     newNoteFormVisibleOnPage: state.newNoteFormVisibleOnPage,
     notes: state.notes,
+    currentJournal: state.selectedJournal,
   };
 };
 
