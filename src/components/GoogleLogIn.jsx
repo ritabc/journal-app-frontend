@@ -33,7 +33,6 @@ class GoogleLogIn extends React.Component {
           if ("error" in response) {
             if (response.error === e.USER_NOT_FOUND) {
               // If receive user not found error, sign the user up instead
-              console.log("reached user not found");
               fetch(`${HOST}/signup`, {
                 method: "POST",
                 headers: {

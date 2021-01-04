@@ -20,6 +20,26 @@ const modalStyles = {
   },
 };
 
+const HOST = `${process.env.REACT_APP_DEV_API_HOST}`;
+
+const getNotesFromAPI = () => {
+  return (dispatch, getState) => {
+    dispatch(a.requestNotes());
+    fetch(`${HOST}/journals/${getState().selectedJournal.journalId}/notes`, {
+      headers: {
+        Authorization: getState().currentUser.jwt,
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(a.getNotesSuccess(response));
+      })
+      .catch((error) => {
+        dispatch(a.getNotesFailure(error));
+      });
+  };
+};
+
 class JournalRecorder extends Component {
   handleRequestToCreateJournal = () => {
     const { dispatch } = this.props;
@@ -29,15 +49,14 @@ class JournalRecorder extends Component {
 
   handleChangeCurrentJournal = (id) => {
     const { dispatch } = this.props;
-    console.log(this.props.journals);
     const newSelectedJournalId = Object.keys(this.props.journals).find(
       (journalId) => journalId === id
     );
-    console.log(newSelectedJournalId);
     const changeJournalAction = a.changeJournal(
       this.props.journals[newSelectedJournalId]
     );
     dispatch(changeJournalAction);
+    dispatch(getNotesFromAPI());
   };
 
   handleCreateJournal = (event) => {

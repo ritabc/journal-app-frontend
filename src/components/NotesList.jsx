@@ -35,6 +35,10 @@ const NotesList = (props) => {
         </div>
       </div>
     );
+  } else if (props.stateNotes.error !== null) {
+    currentlyVisible = <div>Error: {props.stateNotes.error}</div>;
+  } else if (props.stateNotes.isLoading) {
+    currentlyVisible = <div>Loading...</div>;
   } else {
     currentlyVisible = (
       <div className="container-fluid">
@@ -56,8 +60,8 @@ const NotesList = (props) => {
           </div>
         </div>
         <div className="row">
-          {Object.keys(props.stateNotes).map((noteId) => (
-            <Note note={props.stateNotes[noteId]} key={noteId} />
+          {Object.keys(props.stateNotes.notes).map((noteId) => (
+            <Note note={props.stateNotes.notes[noteId]} key={noteId} />
           ))}
         </div>
       </div>

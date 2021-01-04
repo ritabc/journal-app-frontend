@@ -28,13 +28,11 @@ export const addJournal = (journal) => {
 };
 
 export const changeJournal = (journal) => {
-  console.log(journal);
-  const { name, journalId, notes } = journal;
+  const { name, journalId } = journal;
   return {
     type: c.CHANGE_JOURNAL,
     name,
     journalId,
-    notes,
   };
 };
 
@@ -89,9 +87,9 @@ export const requestNotes = () => ({
   type: c.REQUEST_NOTES,
 });
 
-export const getNotesSuccess = (journals) => ({
+export const getNotesSuccess = (notes) => ({
   type: c.GET_NOTES_SUCCESS,
-  journals,
+  notes,
 });
 
 export const getNotesFailure = (error) => ({

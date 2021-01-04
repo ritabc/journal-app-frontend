@@ -4,30 +4,6 @@ import NewNoteForm from "./NewNoteForm";
 import { connect } from "react-redux";
 import * as a from "./../actions";
 
-// const HOST = `${process.env.REACT_APP_DEV_API_HOST}`;
-
-// const getNotesFromApi = () => {
-//   return (dispatch, getState) => {
-//     console.log(getState());
-//     dispatch(a.requestNotes());
-//     return fetch(
-//       `${HOST}/journals/${getState().selectedJournal.journalId}notes`,
-//       {
-//         headers: {
-//           Authorization: getState().currentUser.jwt,
-//         },
-//       }
-//     )
-//       .then((response) => response.json())
-//       .then((response) => {
-//         dispatch(a.getNotesSuccess(response));
-//       })
-//       .catch((error) => {
-//         dispatch(a.getNotesFailure(error));
-//       });
-//   };
-// };
-
 class JournalControl extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
@@ -49,7 +25,6 @@ class JournalControl extends Component {
   };
 
   render() {
-      console.log(this.props.notes)
     let currentlyVisibleState = null;
     if (this.props.newNoteFormVisibleOnPage) {
       currentlyVisibleState = (

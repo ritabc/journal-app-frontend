@@ -7,17 +7,22 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./reducers/index";
 import { Provider } from "react-redux";
 import data from "./data/staticData";
 import thunkMiddleware from "redux-thunk";
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
   {
     newNoteFormVisibleOnPage: false,
-    notes: {},
+    notes: {
+      isLoading: false,
+      notes: {},
+      error: null,
+    },
     journals: {
       isLoading: false,
       journals: {},
@@ -27,7 +32,7 @@ const store = createStore(
     googleSignInToken: {},
     currentUser: {},
   },
-  applyMiddleware(thunkMiddleware)
+  composeEnhancers(applyMiddleware(thunkMiddleware))
 );
 store.subscribe(() => console.log(store.getState()));
 

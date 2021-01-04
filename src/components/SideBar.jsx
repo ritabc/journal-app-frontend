@@ -17,16 +17,6 @@ const newJournalBtnStyle = {
   color: "#f8f9fa",
 };
 
-//
-// const { dispatch } = this.props;
-// console.log(this.props.journals);
-// console.log(this.props.journals[Object.keys(this.props.journals)[0]]);
-// const selectFirstJournalAction = a.changeJournal(
-//   this.props.journals[Object.keys(this.props.journals)[0]]
-// );
-// dispatch(selectFirstJournalAction);
-//
-
 const HOST = `${process.env.REACT_APP_DEV_API_HOST}`;
 
 const getJournalsFromAPI = () => {
@@ -47,26 +37,28 @@ const getJournalsFromAPI = () => {
             ]
           )
         );
-        console.log(getState().selectedJournal.journalId);
-        fetch(`${HOST}/journals/${getState().selectedJournal.journalId}/notes`, {
-          headers: {
-            Authorization: getState().currentUser.jwt,
-          },
-        })
+        dispatch(a.requestNotes());
+        fetch(
+          `${HOST}/journals/${getState().selectedJournal.journalId}/notes`,
+          {
+            headers: {
+              Authorization: getState().currentUser.jwt,
+            },
+          }
+        )
           .then((response) => response.json())
           .then((response) => {
-              console.log(response)
-            dispatch(a.getNotesSuccess(response))
-          }).catch(error=>{
-            dispatch(a.getNotesFailure(error))
-        });
+            dispatch(a.getNotesSuccess(response));
+          })
+          .catch((error) => {
+            dispatch(a.getNotesFailure(error));
+          });
       })
       .catch((error) => {
         dispatch(a.getJournalsFailure(error));
       });
   };
 };
-
 
 class SideBar extends React.Component {
   handleNewJournalBtnClick() {
@@ -80,7 +72,6 @@ class SideBar extends React.Component {
   }
 
   render() {
-    console.log(this.props.stateJournals);
     return (
       <React.Fragment>
         <div className="bg-dark h-100" style={sideBarStyles}>
