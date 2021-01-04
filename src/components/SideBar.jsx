@@ -31,7 +31,6 @@ const HOST = `${process.env.REACT_APP_DEV_API_HOST}`;
 
 const getJournalsFromAPI = () => {
   return (dispatch, getState) => {
-    console.log(getState().currentUser.jwt);
     dispatch(a.requestJournals());
     return fetch(`${HOST}/journals`, {
       headers: {
@@ -41,11 +40,6 @@ const getJournalsFromAPI = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(a.getJournalsSuccess(response));
-        console.log(
-          getState().journals.journals[
-            Object.keys(getState().journals.journals)[0]
-          ]
-        );
         dispatch(
           a.changeJournal(
             getState().journals.journals[
@@ -53,6 +47,19 @@ const getJournalsFromAPI = () => {
             ]
           )
         );
+        console.log(getState().selectedJournal.journalId);
+        fetch(`${HOST}/journals/${getState().selectedJournal.journalId}/notes`, {
+          headers: {
+            Authorization: getState().currentUser.jwt,
+          },
+        })
+          .then((response) => response.json())
+          .then((response) => {
+              console.log(response)
+            dispatch(a.getNotesSuccess(response))
+          }).catch(error=>{
+            dispatch(a.getNotesFailure(error))
+        });
       })
       .catch((error) => {
         dispatch(a.getJournalsFailure(error));
@@ -60,17 +67,8 @@ const getJournalsFromAPI = () => {
   };
 };
 
+
 class SideBar extends React.Component {
-  //   constructor(props) {
-  //     super(props);
-  //     const { dispatch } = props;
-  //     console.log(props.stateJournals);
-  //     // // select a first Journal to be selected
-  //     // TODO: maybe do this in componentDidMount
-  //     dispatch(
-  //       a.changeJournal(props.stateJournals[Object.keys(props.stateJournals)[0]])
-  //     );
-  //   }
   handleNewJournalBtnClick() {
     this.props.onClickOfNewJournalBtn();
   }
@@ -78,6 +76,7 @@ class SideBar extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getJournalsFromAPI());
+    // dispatch(getNotesFromApi());
   }
 
   render() {

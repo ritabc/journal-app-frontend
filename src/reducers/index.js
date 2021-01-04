@@ -8,11 +8,13 @@ import googleSignInReducer from "./google-sign-in-reducer";
 import authenticationStatusChangeIsCompleteReducer from "./authentication-status-change-is-complete-reducer";
 import currentUserReducer from "./current-user-reducer";
 import journalsReducer from "./journals-reducer";
+import notesReducer from "./notes-reducer";
 
 const rootReducer = combineReducers({
   newNoteFormVisibleOnPage: newNoteFormVisibleOnPageReducer,
-  notes: noteListReducer,
-  journals: journalListReducer,
+  //   notes: noteListReducer,
+  notes: notesReducer,
+  //   journals: journalListReducer,
   selectedJournal: currentlySelectedJournalReducer,
   newJournalModalVisible: newJournalModalVisibleReducer,
   googleSignInToken: googleSignInReducer,

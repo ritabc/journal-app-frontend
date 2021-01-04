@@ -84,3 +84,17 @@ export const getJournalsFailure = (error) => ({
   type: c.GET_JOURNALS_FAILURE,
   error,
 });
+
+export const requestNotes = () => ({
+  type: c.REQUEST_NOTES,
+});
+
+export const getNotesSuccess = (journals) => ({
+  type: c.GET_NOTES_SUCCESS,
+  journals,
+});
+
+export const getNotesFailure = (error) => ({
+  type: c.GET_NOTES_FAILURE,
+  error,
+});
