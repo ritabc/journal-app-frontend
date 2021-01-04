@@ -47,6 +47,15 @@ const googleSignInStyles = {
 };
 
 class JournalRecorder extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    console.log(this.props.journals);
+    const selectFirstJournalAction = a.changeJournal(
+      this.props.journals[Object.keys(this.props.journals)[0]]
+    );
+    dispatch(selectFirstJournalAction);
+  }
+
   handleRequestToCreateJournal = () => {
     const { dispatch } = this.props;
     const showNewJournalModalAction = a.togggleNewJournalModal();
@@ -55,11 +64,13 @@ class JournalRecorder extends Component {
 
   handleChangeCurrentJournal = (id) => {
     const { dispatch } = this.props;
+    console.log(this.props.journals);
     const newSelectedJournalId = Object.keys(this.props.journals).find(
       (journalId) => journalId === id
     );
+    console.log(newSelectedJournalId);
     const changeJournalAction = a.changeJournal(
-      this.props.journals[newSelectedJournalId]
+      this.props.journals.jour[newSelectedJournalId]
     );
     dispatch(changeJournalAction);
   };
@@ -159,7 +170,9 @@ class JournalRecorder extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    journals: state.journals,
+    journals: state.journals.journals,
+    journalsIsLoading: state.journals.isLoading,
+    getJournalsError: state.journals.error,
     selectedJournal: state.selectedJournal,
     newJournalModalVisible: state.newJournalModalVisible,
     googleSignInToken: state.googleSignInToken,

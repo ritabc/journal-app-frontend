@@ -28,6 +28,7 @@ export const addJournal = (journal) => {
 };
 
 export const changeJournal = (journal) => {
+  console.log(journal);
   const { name, id, notes } = journal;
   return {
     type: c.CHANGE_JOURNAL,
@@ -68,4 +69,18 @@ export const addCurrentUser = (currentUser) => {
 
 export const removeCurrentUser = () => ({
   type: c.REMOVE_CURRENT_USER,
+});
+
+export const requestJournals = () => ({
+  type: c.REQUEST_JOURNALS,
+});
+
+export const getJournalsSuccess = (journals) => ({
+  type: c.GET_JOURNALS_SUCCESS,
+  journals,
+});
+
+export const getJournalsFailure = (error) => ({
+  type: c.GET_JOURNALS_FAILURE,
+  error,
 });

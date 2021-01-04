@@ -7,18 +7,28 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers/index";
 import { Provider } from "react-redux";
 import data from "./data/staticData";
+import thunkMiddleware from "redux-thunk";
 
-const store = createStore(rootReducer, {
-  newNoteFormVisibleOnPage: false,
-  notes: {},
-  journals: {},
-  selectedJournal: null,
-  googleSignInToken: {},
-});
+const store = createStore(
+  rootReducer,
+  {
+    newNoteFormVisibleOnPage: false,
+    notes: {},
+    journals: {
+      isLoading: false,
+      journals: {},
+      error: null,
+    },
+    selectedJournal: null,
+    googleSignInToken: {},
+    currentUser: {},
+  },
+  applyMiddleware(thunkMiddleware)
+);
 store.subscribe(() => console.log(store.getState()));
 
 ReactDOM.render(

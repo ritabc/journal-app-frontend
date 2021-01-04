@@ -7,6 +7,7 @@ import newJournalModalVisibleReducer from "./new-journal-modal-visible-reducer";
 import googleSignInReducer from "./google-sign-in-reducer";
 import authenticationStatusChangeIsCompleteReducer from "./authentication-status-change-is-complete-reducer";
 import currentUserReducer from "./current-user-reducer";
+import journalsReducer from "./journals-reducer";
 
 const rootReducer = combineReducers({
   newNoteFormVisibleOnPage: newNoteFormVisibleOnPageReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   googleSignInToken: googleSignInReducer,
   authenticationStatusChangeIsComplete: authenticationStatusChangeIsCompleteReducer,
   currentUser: currentUserReducer,
+  journals: journalsReducer,
 });
 
 export default rootReducer;

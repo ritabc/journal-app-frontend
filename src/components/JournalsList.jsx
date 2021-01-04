@@ -31,18 +31,18 @@ const JournalsList = (props) => {
           return (
             <li
               style={
-                journal.id === props.currentlySelectedJournal.id
+                journal.journalId === props.currentlySelectedJournal.id
                   ? selectedStyle
                   : nonSelectedStyle
               }
-              key={journal.id}
+              key={journal.journalId}
             >
               <button
                 onClick={handleChangeCurrentJournal}
                 className="btn"
-                name={journal.id}
+                name={journal.journalId}
                 style={
-                  journal.id === props.currentlySelectedJournal.id
+                  journal.journalId === props.currentlySelectedJournal.id
                     ? selectedBtnStyle
                     : nonSelectedBtnStyle
                 }
