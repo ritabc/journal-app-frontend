@@ -21,7 +21,7 @@ const modalStyles = {
   },
 };
 
-const HOST = `${process.env.REACT_APP_DEV_API_HOST}`;
+const HOST = `${process.env.REACT_APP_API_HOST}`;
 
 const getNotesFromAPI = () => {
   return (dispatch, getState) => {

@@ -5,7 +5,7 @@ import * as a from "../actions";
 import * as e from "../api/errors";
 
 const CLIENT_ID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
-const HOST = `${process.env.REACT_APP_DEV_API_HOST}`;
+const HOST = `${process.env.REACT_APP_API_HOST}`;
 
 class GoogleLogIn extends React.Component {
   login = (response) => {

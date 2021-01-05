@@ -6,7 +6,7 @@ import * as a from "./../actions";
 import { POST_NEW_NOTE_SUCCESS } from "../actions/ActionTypes";
 import * as e from "../api/errors";
 
-const HOST = `${process.env.REACT_APP_DEV_API_HOST}`;
+const HOST = `${process.env.REACT_APP_API_HOST}`;
 
 const postNewNote = (newNote) => {
   const { title, content, journalId } = newNote;

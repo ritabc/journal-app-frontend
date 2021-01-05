@@ -18,7 +18,7 @@ const newJournalBtnStyle = {
   color: "#f8f9fa",
 };
 
-const HOST = `${process.env.REACT_APP_DEV_API_HOST}`;
+const HOST = `${process.env.REACT_APP_API_HOST}`;
 
 const getJournalsFromAPI = () => {
   return (dispatch, getState) => {
