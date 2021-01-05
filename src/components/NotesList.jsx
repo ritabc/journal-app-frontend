@@ -60,9 +60,17 @@ const NotesList = (props) => {
           </div>
         </div>
         <div className="row">
-          {Object.keys(props.stateNotes.notes).map((noteId) => (
-            <Note note={props.stateNotes.notes[noteId]} key={noteId} />
-          ))}
+          {/* Send sorted notes, one at a time, to Note component */}
+          {Object.keys(props.stateNotes.notes)
+            .sort((a, b) => {
+              return (
+                new Date(props.stateNotes.notes[b]["dateCreated"]) -
+                new Date(props.stateNotes.notes[a]["dateCreated"])
+              );
+            })
+            .map((noteId) => (
+              <Note note={props.stateNotes.notes[noteId]} key={noteId} />
+            ))}
         </div>
       </div>
     );

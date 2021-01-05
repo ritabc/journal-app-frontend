@@ -1,18 +1,5 @@
 import * as c from "./../actions/ActionTypes";
 
-export const addNote = (note) => {
-  const { title, content, journalId, id, dateCreated, lastUpdated } = note;
-  return {
-    type: c.ADD_NOTE,
-    title,
-    content,
-    journalId,
-    id,
-    dateCreated,
-    lastUpdated,
-  };
-};
-
 export const toggleNewNoteForm = () => ({
   type: c.TOGGLE_NEW_NOTE_FORM,
 });
@@ -94,5 +81,27 @@ export const getNotesSuccess = (notes) => ({
 
 export const getNotesFailure = (error) => ({
   type: c.GET_NOTES_FAILURE,
+  error,
+});
+
+export const requestPostNewNote = () => ({
+  type: c.REQUEST_POST_NEW_NOTE,
+});
+
+export const postNewNoteSuccess = (note) => {
+  const { noteId, journalId, title, content, dateCreated, lastUpdated } = note;
+  return {
+    type: c.POST_NEW_NOTE_SUCCESS,
+    noteId,
+    journalId,
+    title,
+    content,
+    dateCreated,
+    lastUpdated,
+  };
+};
+
+export const postNewNoteFailure = (error) => ({
+  type: c.POST_NEW_NOTE_FAILURE,
   error,
 });

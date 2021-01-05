@@ -1,5 +1,4 @@
 import React from "react";
-import { v4 } from "uuid";
 
 const titleStyles = { color: "#343a40" };
 const inputStyles = {
@@ -17,11 +16,8 @@ const NewNoteForm = (props) => {
   function handleNewNoteFormSubmission(event) {
     event.preventDefault();
     props.onNewNoteCreation({
-      dateCreated: Date.now(),
       title: event.target.title.value,
       content: event.target.content.value,
-      lastUpdated: Date.now(),
-      id: v4(),
       journalId: event.target.journalId.value,
     });
   }
@@ -36,7 +32,7 @@ const NewNoteForm = (props) => {
           <input
             type="hidden"
             name="journalId"
-            value={props.currentJournal.id}
+            value={props.currentJournal.journalId}
           />
           <div className="form-floating pb-3">
             <input

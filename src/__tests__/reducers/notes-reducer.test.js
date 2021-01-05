@@ -1,5 +1,7 @@
 import notesReducer from "../../reducers/notes-reducer";
 import * as c from "../../actions/ActionTypes";
+import { v4 } from "uuid";
+import noteListReducer from "../../reducers/note-list-reducer";
 
 describe("notesReducer", () => {
   const defaultState = {
@@ -14,6 +16,17 @@ describe("notesReducer", () => {
     isLoading: true,
     notes: {},
     error: null,
+  };
+
+  const now = Date.now();
+
+  const notesData = {
+    title: "Cleo Bath",
+    content: "We should bathe the dog tomorrow",
+    journalId: v4(),
+    id: v4(),
+    dateCreated: now,
+    lastUpdated: now,
   };
 
   test("Should successfully return the default state if no action is passed into it", () => {
@@ -64,6 +77,63 @@ describe("notesReducer", () => {
     const error = "An error";
     action = {
       type: c.GET_NOTES_FAILURE,
+      error,
+    };
+    expect(notesReducer(loadingState, action)).toEqual({
+      isLoading: false,
+      notes: {},
+      error: "An error",
+    });
+  });
+
+  test("requesting note POST should successfully change isLoading from false to true", () => {
+    action = {
+      type: c.REQUEST_POST_NEW_NOTE,
+    };
+    expect(notesReducer(defaultState, action)).toEqual({
+      isLoading: true,
+      notes: {},
+      error: null,
+    });
+  });
+
+  test("Successfully POSTing new note should change isLoading to false and update notes", () => {
+    const {
+      title,
+      content,
+      noteId,
+      journalId,
+      dateCreated,
+      lastUpdated,
+    } = notesData;
+    action = {
+      type: c.POST_NEW_NOTE_SUCCESS,
+      title,
+      content,
+      noteId,
+      journalId,
+      dateCreated,
+      lastUpdated,
+    };
+    expect(notesReducer(loadingState, action)).toEqual({
+      isLoading: false,
+      notes: {
+        [noteId]: {
+          noteId,
+          title,
+          content,
+          journalId,
+          dateCreated,
+          lastUpdated,
+        },
+      },
+      error: null,
+    });
+  });
+  test("failing to POST new note should change isLoading to false and add an error message", () => {
+    const error = "An error";
+    action = {
+      type: c.POST_NEW_NOTE_FAILURE,
       error,
     };
     expect(notesReducer(loadingState, action)).toEqual({
