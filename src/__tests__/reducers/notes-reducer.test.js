@@ -1,7 +1,6 @@
 import notesReducer from "../../reducers/notes-reducer";
 import * as c from "../../actions/ActionTypes";
 import { v4 } from "uuid";
-import noteListReducer from "../../reducers/note-list-reducer";
 
 describe("notesReducer", () => {
   const defaultState = {

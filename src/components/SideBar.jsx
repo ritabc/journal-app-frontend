@@ -61,14 +61,13 @@ const getJournalsFromAPI = () => {
 };
 
 class SideBar extends React.Component {
-  handleNewJournalBtnClick() {
+  handleNewJournalBtnClick = () => {
     this.props.onClickOfNewJournalBtn();
-  }
+  };
 
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getJournalsFromAPI());
-    // dispatch(getNotesFromApi());
   }
 
   render() {

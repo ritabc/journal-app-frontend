@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import { v4 } from "uuid";
 import { connect } from "react-redux";
 import * as a from "../actions";
+import * as e from "../api/errors";
 
 Modal.setAppElement("#root");
 const createJournalBtnStyles = { border: "3px solid #5A2762" };
@@ -40,6 +41,42 @@ const getNotesFromAPI = () => {
   };
 };
 
+const postNewJournal = (newJournal) => {
+  const name = newJournal.name;
+  return (dispatch, getState) => {
+    dispatch(a.requestPostNewJournal());
+    fetch(`${HOST}/journals`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().currentUser.jwt,
+      },
+      body: JSON.stringify({ journal: { name } }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if ("error" in response) {
+          if (response.error === e.USER_NOT_AUTHORIZED) {
+            dispatch(a.postNewJournalFailure(e.USER_NOT_AUTHORIZED));
+            alert(e.USER_NOT_AUTHORIZED);
+          }
+        } else {
+          const { name, id } = response;
+          // Store the journal in app state
+          dispatch(a.postNewJournalSuccess({ journalId: id, name }));
+          //  And update selectedJournal
+          dispatch(a.changeJournal({ journalId: id, name }));
+          //   And update notes
+          dispatch(getNotesFromAPI());
+        }
+      })
+      .catch((error) => {
+        dispatch(a.postNewJournalFailure(error));
+        alert(`Failed to add note: ${error}`);
+      });
+  };
+};
+
 class JournalRecorder extends Component {
   handleRequestToCreateJournal = () => {
     const { dispatch } = this.props;
@@ -62,18 +99,12 @@ class JournalRecorder extends Component {
   handleCreateJournal = (event) => {
     // event.preventDefault();
     const { dispatch } = this.props;
-    const newJournalId = v4();
     const newJournal = {
-      id: newJournalId,
       name: event.target.name.value,
-      notes: [],
     };
-    const newJournalAction = a.addJournal(newJournal);
-    const changeJournalAction = a.changeJournal(newJournal);
     const hideNewJournalModalAction = a.togggleNewJournalModal();
 
-    dispatch(newJournalAction);
-    dispatch(changeJournalAction);
+    dispatch(postNewJournal(newJournal));
     dispatch(hideNewJournalModalAction);
   };
 

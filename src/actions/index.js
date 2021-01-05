@@ -4,15 +4,15 @@ export const toggleNewNoteForm = () => ({
   type: c.TOGGLE_NEW_NOTE_FORM,
 });
 
-export const addJournal = (journal) => {
-  const { name, id, notes } = journal;
-  return {
-    type: c.ADD_JOURNAL,
-    name,
-    id,
-    notes,
-  };
-};
+// export const addJournal = (journal) => {
+//   const { name, id, notes } = journal;
+//   return {
+//     type: c.ADD_JOURNAL,
+//     name,
+//     id,
+//     notes,
+//   };
+// };
 
 export const changeJournal = (journal) => {
   const { name, journalId } = journal;
@@ -103,5 +103,23 @@ export const postNewNoteSuccess = (note) => {
 
 export const postNewNoteFailure = (error) => ({
   type: c.POST_NEW_NOTE_FAILURE,
+  error,
+});
+
+export const requestPostNewJournal = () => ({
+  type: c.REQUEST_POST_NEW_JOURNAL,
+});
+
+export const postNewJournalSuccess = (journal) => {
+  const { journalId, name } = journal;
+  return {
+    type: c.POST_NEW_JOURNAL_SUCCESS,
+    journalId,
+    name,
+  };
+};
+
+export const postNewJournalFailure = (error) => ({
+  type: c.POST_NEW_JOURNAL_FAILURE,
   error,
 });

@@ -1,5 +1,6 @@
 import journalsReducer from "../../reducers/journals-reducer";
 import * as c from "../../actions/ActionTypes";
+import { v4 } from "uuid";
 
 describe("journalsReducer", () => {
   const defaultState = {
@@ -52,6 +53,49 @@ describe("journalsReducer", () => {
     const error = "An error";
     action = {
       type: c.GET_JOURNALS_FAILURE,
+      error,
+    };
+    expect(journalsReducer(loadingState, action)).toEqual({
+      isLoading: false,
+      journals: {},
+      error: "An error",
+    });
+  });
+
+  test("requesting journal POST should successfully change isLoading from false to true", () => {
+    action = {
+      type: c.REQUEST_POST_NEW_JOURNAL,
+    };
+    expect(journalsReducer(defaultState, action)).toEqual({
+      isLoading: true,
+      journals: {},
+      error: null,
+    });
+  });
+
+  test("Successfully POSTing new journal should change isLoading to false and update journals", () => {
+    const name = "Movies";
+    const journalId = v4();
+    action = {
+      type: c.POST_NEW_JOURNAL_SUCCESS,
+      name,
+      journalId,
+    };
+    expect(journalsReducer(loadingState, action)).toEqual({
+      isLoading: false,
+      journals: {
+        [journalId]: {
+          name: "Movies",
+          journalId,
+        },
+      },
+      error: null,
+    });
+  });
+  test("failing to POST new journal should change isLoading to false and add an error message", () => {
+    const error = "An error";
+    action = {
+      type: c.POST_NEW_JOURNAL_FAILURE,
       error,
     };
     expect(journalsReducer(loadingState, action)).toEqual({

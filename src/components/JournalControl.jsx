@@ -49,7 +49,7 @@ const postNewNote = (newNote) => {
         }
       })
       .catch((error) => {
-        dispatch(error);
+        dispatch(a.postNewNoteFailure(error));
         alert(`Failed to add note: ${error}`);
       });
   };
