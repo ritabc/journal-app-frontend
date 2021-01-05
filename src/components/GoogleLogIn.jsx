@@ -73,6 +73,7 @@ class GoogleLogIn extends React.Component {
         })
         .catch((error) => {
           console.log(error);
+          dispatch(a.toggleAuthenticationStatusChangeIsComplete());
           alert(`Failed to log in: ${error}`);
         });
     }

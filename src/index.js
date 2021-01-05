@@ -31,6 +31,7 @@ const store = createStore(
     selectedJournal: null,
     googleSignInToken: {},
     currentUser: {},
+    authenticationStatusChangeIsComplete: true,
   },
   composeEnhancers(applyMiddleware(thunkMiddleware))
 );

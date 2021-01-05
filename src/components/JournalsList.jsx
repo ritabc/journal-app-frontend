@@ -17,6 +17,8 @@ const nonSelectedBtnStyle = {
   width: "100%",
   textAlign: "left",
 };
+
+const ulStyles = { listStyleType: "none" };
 const JournalsList = (props) => {
   function handleChangeCurrentJournal(event) {
     props.onChangeCurrentJournal(event.target.name);
@@ -28,7 +30,7 @@ const JournalsList = (props) => {
     props.currentlySelectedJournal !== null
   ) {
     list = (
-      <ul>
+      <ul style={ulStyles}>
         {Object.values(props.stateJournals).map((journal) => {
           return (
             <li

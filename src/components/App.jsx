@@ -31,7 +31,17 @@ const googleSignInStyles = {
 class App extends Component {
   render() {
     let display = null;
-    if ("jwt" in this.props.currentUser) {
+    if (!this.props.authenticationIsNotLoading) {
+      display = (
+        <div style={logInStylesContainer} className="h-100">
+          <div style={logInStyles}>
+            <div style={innerBorderStyles} className="p-5">
+              <h2>Loading...</h2>
+            </div>
+          </div>
+        </div>
+      );
+    } else if ("jwt" in this.props.currentUser) {
       display = <JournalRecorder />;
     } else {
       display = (
@@ -61,6 +71,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.currentUser,
+    authenticationIsNotLoading: state.authenticationStatusChangeIsComplete,
   };
 };
 
