@@ -38,7 +38,7 @@ class App extends Component {
         <div style={logInStylesContainer} className="h-100">
           <div style={logInStyles}>
             <div style={innerBorderStyles} className="p-5">
-              <h2>Log In With Google</h2>
+              <h2>Log In/Sign Up With Google</h2>
               <div style={googleSignInStyles} className="pt-2">
                 <GoogleLogIn />
               </div>

@@ -86,7 +86,7 @@ class GoogleLogIn extends React.Component {
     return (
       <GoogleLogin
         clientId={CLIENT_ID}
-        buttonText="Login"
+        buttonText="Sign In"
         onSuccess={this.login}
         onFailure={this.handleLoginFailure}
         cookiePolicy={"single_host_origin"}

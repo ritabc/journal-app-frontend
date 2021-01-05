@@ -124,10 +124,6 @@ export const postNewJournalFailure = (error) => ({
   error,
 });
 
-export const clearSelectedJournal = () => ({
-  type: c.CLEAR_SELECTED_JOURNAL,
-});
-
 export const clearJournals = () => ({
   type: c.CLEAR_JOURNALS,
 });

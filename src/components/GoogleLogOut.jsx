@@ -37,7 +37,7 @@ class GoogleLogOut extends React.Component {
         <div style={innerBorderStyles}>
           <GoogleLogout
             clientId={CLIENT_ID}
-            buttonText="Logout"
+            buttonText="Sign Out"
             onLogoutSuccess={this.logout}
             onFailure={this.handleLogoutFailure}
           />

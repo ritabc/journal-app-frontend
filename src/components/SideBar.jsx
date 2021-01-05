@@ -142,7 +142,6 @@ class SideBar extends React.Component {
   render() {
     let wipeBtn = null;
     if (checkExistenceOfDefaultJournals(this.props.stateJournals)) {
-      console.log("displaying wipe button!");
       wipeBtn = (
         <div>
           <button

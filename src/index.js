@@ -34,7 +34,9 @@ const store = createStore(
   },
   composeEnhancers(applyMiddleware(thunkMiddleware))
 );
-store.subscribe(() => console.log(store.getState()));
+store.subscribe(() => {
+  //   console.log(store.getState());
+});
 
 ReactDOM.render(
   <Provider store={store}>
