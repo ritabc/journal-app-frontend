@@ -40,6 +40,27 @@ export default (state = defaultState, action) => {
         isLoading: false,
         error: action.error,
       });
+    case c.CLEAR_JOURNALS:
+      let newState = { ...state.journals };
+      const journals = Object.values(newState).map((journalEl) => {
+        return { name: journalEl.name, id: journalEl.journalId };
+      });
+      journals.forEach((journal) => {
+        if (
+          [
+            "Recipes",
+            "Daily Notes",
+            "Dream Diary",
+            "Travel Notes",
+            "Introspective Notes",
+          ].includes(journal.name)
+        ) {
+          delete newState[journal.id];
+        }
+      });
+      return Object.assign({}, state, {
+        journals: newState,
+      });
     default:
       return state;
   }

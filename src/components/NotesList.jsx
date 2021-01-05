@@ -55,9 +55,9 @@ const NotesList = (props) => {
               </button>{" "}
             </div>
           </div>
-          <div className="pt-2">
+          {/* <div className="pt-2">
             <SearchOne />
-          </div>
+          </div> */}
         </div>
         <div className="row">
           {/* Send sorted notes, one at a time, to Note component */}

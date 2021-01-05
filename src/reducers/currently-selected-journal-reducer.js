@@ -5,6 +5,8 @@ export default (state = {}, action) => {
   switch (action.type) {
     case c.CHANGE_JOURNAL:
       return { journalId, name, notes };
+    case c.CLEAR_SELECTED_JOURNAL:
+      return {};
     default:
       return state;
   }

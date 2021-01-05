@@ -56,6 +56,10 @@ export default (state = defaultState, action) => {
         isLoading: false,
         error: action.error,
       });
+    // case c.CLEAR_NOTES:
+    //   return Object.assign({}, state, {
+    //     notes: {},
+    //   });
     default:
       return state;
   }

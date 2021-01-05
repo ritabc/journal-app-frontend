@@ -123,3 +123,15 @@ export const postNewJournalFailure = (error) => ({
   type: c.POST_NEW_JOURNAL_FAILURE,
   error,
 });
+
+export const clearSelectedJournal = () => ({
+  type: c.CLEAR_SELECTED_JOURNAL,
+});
+
+export const clearJournals = () => ({
+  type: c.CLEAR_JOURNALS,
+});
+
+export const clearNotes = () => ({
+  type: c.CLEAR_NOTES,
+});
