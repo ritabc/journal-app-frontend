@@ -11,5 +11,6 @@ The goal of this JournalRecorder application was to demonstrate a working knowle
 - Add search functionality, both across journals and within a journal
 - Add Update and Delete functionality, for journals and notes
 - Store JWT in browser cookies, allowing the user to refresh the page without having to log back in.
+- Add routing (for journals, ids)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

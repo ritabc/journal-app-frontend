@@ -31,29 +31,32 @@ const getJournalsFromAPI = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(a.getJournalsSuccess(response));
-        dispatch(
-          a.changeJournal(
-            getState().journals.journals[
-              Object.keys(getState().journals.journals)[0]
-            ]
+        // If we receive more than 0 journals from the API, change the currentJournal and request its notes
+        if (response.length !== 0) {
+          dispatch(
+            a.changeJournal(
+              getState().journals.journals[
+                Object.keys(getState().journals.journals)[0]
+              ]
+            )
+          );
+          dispatch(a.requestNotes());
+          fetch(
+            `${HOST}/journals/${getState().selectedJournal.journalId}/notes`,
+            {
+              headers: {
+                Authorization: getState().currentUser.jwt,
+              },
+            }
           )
-        );
-        dispatch(a.requestNotes());
-        fetch(
-          `${HOST}/journals/${getState().selectedJournal.journalId}/notes`,
-          {
-            headers: {
-              Authorization: getState().currentUser.jwt,
-            },
-          }
-        )
-          .then((response) => response.json())
-          .then((response) => {
-            dispatch(a.getNotesSuccess(response));
-          })
-          .catch((error) => {
-            dispatch(a.getNotesFailure(error));
-          });
+            .then((response) => response.json())
+            .then((response) => {
+              dispatch(a.getNotesSuccess(response));
+            })
+            .catch((error) => {
+              dispatch(a.getNotesFailure(error));
+            });
+        }
       })
       .catch((error) => {
         dispatch(a.getJournalsFailure(error));
@@ -91,31 +94,36 @@ const wipeDefaultJournalsFromApi = () => {
             alert(e.PLEASE_LOG_IN);
           }
         } else {
-          //   dispatch(a.clearSelectedJournal());
+          // Clear default journals
           dispatch(a.clearJournals());
-          dispatch(
-            a.changeJournal(
-              getState().journals.journals[
-                Object.keys(getState().journals.journals)[0]
-              ]
+          // if we don't have any journals, change current journal to null
+          if (Object.keys(getState().journals.journals).length === 0) {
+            dispatch(a.nullifyJournal());
+          } else {
+            dispatch(
+              a.changeJournal(
+                getState().journals.journals[
+                  Object.keys(getState().journals.journals)[0]
+                ]
+              )
+            );
+            dispatch(a.requestNotes());
+            fetch(
+              `${HOST}/journals/${getState().selectedJournal.journalId}/notes`,
+              {
+                headers: {
+                  Authorization: getState().currentUser.jwt,
+                },
+              }
             )
-          );
-          dispatch(a.requestNotes());
-          fetch(
-            `${HOST}/journals/${getState().selectedJournal.journalId}/notes`,
-            {
-              headers: {
-                Authorization: getState().currentUser.jwt,
-              },
-            }
-          )
-            .then((response) => response.json())
-            .then((response) => {
-              dispatch(a.getNotesSuccess(response));
-            })
-            .catch((error) => {
-              dispatch(a.getNotesFailure(error));
-            });
+              .then((response) => response.json())
+              .then((response) => {
+                dispatch(a.getNotesSuccess(response));
+              })
+              .catch((error) => {
+                dispatch(a.getNotesFailure(error));
+              });
+          }
         }
       })
       .catch((error) => {

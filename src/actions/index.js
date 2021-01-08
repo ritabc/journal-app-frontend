@@ -23,6 +23,12 @@ export const changeJournal = (journal) => {
   };
 };
 
+export const nullifyJournal = () => {
+  return {
+    type: c.NULLIFY_CURRENT_JOURNAL,
+  };
+};
+
 export const togggleNewJournalModal = () => ({
   type: c.TOGGLE_NEW_JOURNAL_MODAL,
 });
