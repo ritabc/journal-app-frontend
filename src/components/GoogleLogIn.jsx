@@ -11,7 +11,8 @@ class GoogleLogIn extends React.Component {
   login = (response) => {
     const { dispatch } = this.props;
     if (response.accessToken) {
-      let authenticationIsLoadingAction = a.toggleAuthenticationStatusChangeIsComplete();
+      let authenticationIsLoadingAction =
+        a.toggleAuthenticationStatusChangeIsComplete();
       let googleSignInSuccessAction = a.googleSignInSuccess(response.tokenId);
 
       dispatch(authenticationIsLoadingAction);
@@ -19,7 +20,9 @@ class GoogleLogIn extends React.Component {
 
       //   Try logging in first
       let tokenData = JSON.stringify({
-        user: { google_id_token: response.tokenId },
+        user: {
+          google_id_token: response.tokenId,
+        },
       });
       fetch(`${HOST}/login`, {
         method: "POST",
@@ -52,9 +55,14 @@ class GoogleLogIn extends React.Component {
                     userId: id,
                   });
                   dispatch(saveUserAction);
-                  let authenticationDoneLoadingAction = a.toggleAuthenticationStatusChangeIsComplete();
+                  let authenticationDoneLoadingAction =
+                    a.toggleAuthenticationStatusChangeIsComplete();
                   dispatch(authenticationDoneLoadingAction);
                 });
+            } else {
+              // auth error for some other reason
+              dispatch(a.googleSignInFailure(response.error));
+              alert(response.error);
             }
           } else {
             // We have logged in a user
@@ -67,12 +75,12 @@ class GoogleLogIn extends React.Component {
               userId: id,
             });
             dispatch(saveUserAction);
-            let authenticationDoneLoadingAction = a.toggleAuthenticationStatusChangeIsComplete();
+            let authenticationDoneLoadingAction =
+              a.toggleAuthenticationStatusChangeIsComplete();
             dispatch(authenticationDoneLoadingAction);
           }
         })
         .catch((error) => {
-          console.log(error);
           dispatch(a.toggleAuthenticationStatusChangeIsComplete());
           alert(`Failed to log in: ${error}`);
         });

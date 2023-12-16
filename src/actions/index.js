@@ -42,6 +42,10 @@ export const googleSignOutSuccess = () => ({
   type: c.GOOGLE_SIGN_OUT_SUCCESS,
 });
 
+export const googleSignInFailure = () => ({
+  type: c.GOOGLE_SIGN_IN_FAILURE,
+});
+
 export const toggleAuthenticationStatusChangeIsComplete = () => ({
   type: c.AUTHENTICATION_STATUS_CHANGE_IS_COMPLETE,
 });
@@ -111,6 +115,21 @@ export const postNewNoteFailure = (error) => ({
   type: c.POST_NEW_NOTE_FAILURE,
   error,
 });
+
+export const requestDeleteNote = () => {
+  return {
+    type: c.REQUEST_DELETE_NOTE,
+  };
+};
+
+export const deleteNoteFailure = (error) => ({
+  type: c.DELETE_NOTE_FAILURE,
+  error,
+});
+
+export const deleteNoteSuccess = (noteId) => {
+  return { type: c.DELETE_NOTE_SUCCESS, deletedNoteId: noteId };
+};
 
 export const requestPostNewJournal = () => ({
   type: c.REQUEST_POST_NEW_JOURNAL,

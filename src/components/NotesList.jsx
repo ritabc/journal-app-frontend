@@ -69,7 +69,11 @@ const NotesList = (props) => {
               );
             })
             .map((noteId) => (
-              <Note note={props.stateNotes.notes[noteId]} key={noteId} />
+              <Note
+                note={props.stateNotes.notes[noteId]}
+                onClickOfDeleteNoteBtn={props.onClickOfDeleteNoteBtn}
+                key={noteId}
+              />
             ))}
         </div>
       </div>

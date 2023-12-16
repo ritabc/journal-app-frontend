@@ -3,55 +3,83 @@ import NotesList from "./NotesList";
 import NewNoteForm from "./NewNoteForm";
 import { connect } from "react-redux";
 import * as a from "./../actions";
-import { POST_NEW_NOTE_SUCCESS } from "../actions/ActionTypes";
 import * as e from "../api/errors";
 
 const HOST = `${process.env.REACT_APP_API_HOST}`;
 
-const postNewNote = (newNote) => {
-  const { title, content, journalId } = newNote;
+const deleteNote = (note) => {
+  const { journalId, noteId } = note;
   return (dispatch, getState) => {
-    dispatch(a.requestPostNewNote());
-    return fetch(`${HOST}/journals/${journalId}/notes`, {
-      method: "POST",
+    dispatch(a.requestDeleteNote());
+    return fetch(`${HOST}/journals/${journalId}/notes/${noteId}`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: getState().currentUser.jwt,
       },
-      body: JSON.stringify({ note: { title, content, journalId } }),
     })
-      .then((response) => response.json())
       .then((response) => {
-        if ("error" in response) {
-          if (response.error === e.USER_NOT_AUTHORIZED) {
-            dispatch(a.postNewNoteFailure(e.USER_NOT_AUTHORIZED));
-            alert(e.USER_NOT_AUTHORIZED);
+        if (!response.ok) {
+          // request failed
+          if (response.status === e.UNAUTHORIZED_STATUS_CODE) {
+            // due to 401
+            dispatch(a.deleteNoteFailure(e.PLEASE_LOG_IN));
+            alert(e.PLEASE_LOG_IN);
+          } else {
+            // failed due to unknown reason
+            dispatch(a.deleteNoteFailure(response.statusText));
           }
         } else {
-          const {
-            journal_id,
-            title,
-            content,
-            created_at,
-            updated_at,
-            id,
-          } = response;
-          dispatch(
-            a.postNewNoteSuccess({
-              noteId: id,
-              journalId: journal_id,
-              dateCreated: created_at,
-              lastUpdated: updated_at,
-              title,
-              content,
-            })
-          );
+          // request was successful
+          dispatch(a.deleteNoteSuccess(noteId));
         }
       })
       .catch((error) => {
-        dispatch(a.postNewNoteFailure(error));
+        dispatch(a.deleteNoteFailure(error));
         alert(`Failed to add note: ${error}`);
       });
+  };
+};
+
+const postNewNote = (newNote) => {
+  const { title, content, journalId } = newNote;
+  return async (dispatch, getState) => {
+    dispatch(a.requestPostNewNote());
+    const response = await fetch(`${HOST}/journals/${journalId}/notes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().currentUser.jwt,
+        // Authorization: "AbC",
+      },
+      body: JSON.stringify({ note: { title, content, journalId } }),
+    });
+    if (!response.ok) {
+      // request failed
+      if (response.status === e.UNAUTHORIZED_STATUS_CODE) {
+        // due to 401
+        dispatch(a.postNewNoteFailure(response.statusText));
+        alert(response.statusText);
+      } else {
+        // failed due to unknown reason
+        dispatch(a.deleteNoteFailure(response.statusText));
+      }
+    } else {
+      // response was okay
+      const body = await response.json();
+      const { journal_id, title, content, created_at, updated_at, id } = body;
+      dispatch(
+        a.postNewNoteSuccess({
+          noteId: id,
+          journalId: journal_id,
+          dateCreated: created_at,
+          lastUpdated: updated_at,
+          title,
+          content,
+        })
+      );
+    }
+    return response;
   };
 };
 
@@ -69,6 +97,11 @@ class JournalControl extends Component {
     dispatch(toggleFormVisibilityAction);
   };
 
+  handleRequestToDeleteNote = (note) => {
+    const { dispatch } = this.props;
+    dispatch(deleteNote(note));
+  };
+
   render() {
     let currentlyVisibleState = null;
     if (this.props.newNoteFormVisibleOnPage) {
@@ -84,6 +117,7 @@ class JournalControl extends Component {
           onClickOfNewNoteBtn={this.handleRequestToCreateNote}
           currentJournal={this.props.currentJournal}
           stateNotes={this.props.notes}
+          onClickOfDeleteNoteBtn={this.handleRequestToDeleteNote}
         />
       );
     }

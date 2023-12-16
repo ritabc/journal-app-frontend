@@ -31,14 +31,8 @@ export default (state = defaultState, action) => {
       return Object.assign({}, state, { isLoading: true });
     case c.POST_NEW_NOTE_SUCCESS:
       let newNotesList = { ...state.notes };
-      const {
-        title,
-        content,
-        noteId,
-        journalId,
-        dateCreated,
-        lastUpdated,
-      } = action;
+      const { title, content, noteId, journalId, dateCreated, lastUpdated } =
+        action;
       newNotesList[noteId] = {
         title,
         content,
@@ -60,6 +54,22 @@ export default (state = defaultState, action) => {
     //   return Object.assign({}, state, {
     //     notes: {},
     //   });
+    case c.REQUEST_DELETE_NOTE:
+      return Object.assign({}, state, { isLoading: true });
+
+    case c.DELETE_NOTE_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: false,
+        error: action.error,
+      });
+    case c.DELETE_NOTE_SUCCESS:
+      const allButDeletedNote = Object.values(state.notes).filter(
+        (note) => note.noteId !== action.deletedNoteId
+      );
+      return Object.assign({}, state, {
+        isLoading: false,
+        notes: allButDeletedNote,
+      });
     default:
       return state;
   }

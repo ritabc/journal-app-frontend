@@ -43,37 +43,35 @@ const getNotesFromAPI = () => {
 
 const postNewJournal = (newJournal) => {
   const name = newJournal.name;
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch(a.requestPostNewJournal());
-    fetch(`${HOST}/journals`, {
+    const response = await fetch(`${HOST}/journals`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: getState().currentUser.jwt,
       },
       body: JSON.stringify({ journal: { name } }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if ("error" in response) {
-          if (response.error === e.USER_NOT_AUTHORIZED) {
-            dispatch(a.postNewJournalFailure(e.USER_NOT_AUTHORIZED));
-            alert(e.USER_NOT_AUTHORIZED);
-          }
-        } else {
-          const { name, id } = response;
-          // Store the journal in app state
-          dispatch(a.postNewJournalSuccess({ journalId: id, name }));
-          //  And update selectedJournal
-          dispatch(a.changeJournal({ journalId: id, name }));
-          //   And update notes
-          dispatch(getNotesFromAPI());
-        }
-      })
-      .catch((error) => {
-        dispatch(a.postNewJournalFailure(error));
-        alert(`Failed to add note: ${error}`);
-      });
+    });
+    if (!response.ok) {
+      if (response.status === e.UNAUTHORIZED_STATUS_CODE) {
+        dispatch(a.postNewJournalFailure(e.USER_NOT_AUTHORIZED));
+        alert(e.USER_NOT_AUTHORIZED);
+      } else {
+        dispatch(a.postNewJournalFailure(response.statusText));
+        alert(response.statusText);
+      }
+    } else {
+      // response is valid
+      const body = await response.json();
+      const { name, id } = body;
+      // Store the journal in app state
+      dispatch(a.postNewJournalSuccess({ journalId: id, name }));
+      //  Update selectedJournal
+      dispatch(a.changeJournal({ journalId: id, name }));
+      //  Update notes
+      dispatch(getNotesFromAPI());
+    }
   };
 };
 
