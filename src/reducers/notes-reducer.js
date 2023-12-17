@@ -50,10 +50,11 @@ export default (state = defaultState, action) => {
         isLoading: false,
         error: action.error,
       });
-    // case c.CLEAR_NOTES:
-    //   return Object.assign({}, state, {
-    //     notes: {},
-    //   });
+    case c.CLEAR_NOTES:
+      return Object.assign({}, state, {
+        isLoading: false,
+        notes: {},
+      });
     case c.REQUEST_DELETE_NOTE:
       return Object.assign({}, state, { isLoading: true });
 

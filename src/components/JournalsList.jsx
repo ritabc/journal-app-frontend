@@ -19,7 +19,23 @@ const nonSelectedBtnStyle = {
 };
 
 const ulStyles = { listStyleType: "none" };
+
+const selectedJournalDeleteBtnStyle = {
+  backgroundColor: "#f8f9fa",
+  width: "auto",
+};
+
+const nonSelectedJournalDeleteBtnStyle = { opacity: "0" };
+
 const JournalsList = (props) => {
+  function handleDeleteJournalBtnClick(journalId) {
+    return () => {
+      return props.onClickOfDeleteJournalBtn({
+        journalId,
+      });
+    };
+  }
+
   function handleChangeCurrentJournal(event) {
     props.onChangeCurrentJournal(event.target.name);
   }
@@ -41,18 +57,35 @@ const JournalsList = (props) => {
               }
               key={journal.journalId}
             >
-              <button
-                onClick={handleChangeCurrentJournal}
-                className="btn"
-                name={journal.journalId}
-                style={
-                  journal.journalId === props.currentlySelectedJournal.journalId
-                    ? selectedBtnStyle
-                    : nonSelectedBtnStyle
-                }
-              >
-                {journal.name}
-              </button>
+              <div className="container">
+                <div className="row mx-0">
+                  <button
+                    onClick={handleChangeCurrentJournal}
+                    className="btn col"
+                    name={journal.journalId}
+                    style={
+                      journal.journalId ===
+                      props.currentlySelectedJournal.journalId
+                        ? selectedBtnStyle
+                        : nonSelectedBtnStyle
+                    }
+                  >
+                    {journal.name}
+                  </button>
+                  <button
+                    onClick={handleDeleteJournalBtnClick(journal.journalId)}
+                    className="col-1 px-2"
+                    style={
+                      journal.journalId ===
+                      props.currentlySelectedJournal.journalId
+                        ? selectedJournalDeleteBtnStyle
+                        : nonSelectedJournalDeleteBtnStyle
+                    }
+                  >
+                    D
+                  </button>
+                </div>
+              </div>
             </li>
           );
         })}

@@ -61,6 +61,29 @@ export default (state = defaultState, action) => {
       return Object.assign({}, state, {
         journals: newState,
       });
+
+    case c.REQUEST_DELETE_JOURNAL:
+      return Object.assign({}, state, { isLoading: true });
+    case c.DELETE_JOURNAL_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: false,
+        error: action.error,
+      });
+    case c.DELETE_JOURNAL_SUCCESS:
+      // copy the current state's journals
+      // all except the one to delete
+      // create an object with jIDs as keys, journal
+      let journalsCopy = {};
+      Object.keys(state.journals).forEach((journalId) => {
+        if (action.deletedJournalId === journalId) return;
+        const journalFromState = state.journals[journalId];
+        const { name } = journalFromState;
+        journalsCopy[journalId] = { name, journalId };
+      });
+      return Object.assign({}, state, {
+        isLoading: false,
+        journals: journalsCopy,
+      });
     default:
       return state;
   }

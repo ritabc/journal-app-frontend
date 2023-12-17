@@ -28,6 +28,7 @@ const deleteNote = (note) => {
           } else {
             // failed due to unknown reason
             dispatch(a.deleteNoteFailure(response.statusText));
+            alert(`Failed to delete note: ${response.statusText}`);
           }
         } else {
           // request was successful
@@ -36,7 +37,7 @@ const deleteNote = (note) => {
       })
       .catch((error) => {
         dispatch(a.deleteNoteFailure(error));
-        alert(`Failed to add note: ${error}`);
+        alert(`Failed to delete note: ${error}`);
       });
   };
 };
@@ -58,11 +59,12 @@ const postNewNote = (newNote) => {
       // request failed
       if (response.status === e.UNAUTHORIZED_STATUS_CODE) {
         // due to 401
-        dispatch(a.postNewNoteFailure(response.statusText));
-        alert(response.statusText);
+        dispatch(a.postNewNoteFailure(e.USER_NOT_AUTHORIZED));
+        alert(e.USER_NOT_AUTHORIZED);
       } else {
         // failed due to unknown reason
-        dispatch(a.deleteNoteFailure(response.statusText));
+        dispatch(a.postNewNoteFailure(response.statusText));
+        alert(response.statusText);
       }
     } else {
       // response was okay

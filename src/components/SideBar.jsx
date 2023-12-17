@@ -182,6 +182,7 @@ class SideBar extends React.Component {
               //   stateJournals={stateJournals}
               stateJournals={this.props.stateJournals}
               onChangeCurrentJournal={this.props.onChangeCurrentJournal}
+              onClickOfDeleteJournalBtn={this.props.onClickOfDeleteJournalBtn}
             />
           </div>
           <div style={newJournalBtnDivStyle}>

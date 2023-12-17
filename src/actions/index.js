@@ -127,9 +127,10 @@ export const deleteNoteFailure = (error) => ({
   error,
 });
 
-export const deleteNoteSuccess = (noteId) => {
-  return { type: c.DELETE_NOTE_SUCCESS, deletedNoteId: noteId };
-};
+export const deleteNoteSuccess = (noteId) => ({
+  type: c.DELETE_NOTE_SUCCESS,
+  deletedNoteId: noteId,
+});
 
 export const requestPostNewJournal = () => ({
   type: c.REQUEST_POST_NEW_JOURNAL,
@@ -147,6 +148,20 @@ export const postNewJournalSuccess = (journal) => {
 export const postNewJournalFailure = (error) => ({
   type: c.POST_NEW_JOURNAL_FAILURE,
   error,
+});
+
+export const requestDeleteJournal = () => ({
+  type: c.REQUEST_DELETE_JOURNAL,
+});
+
+export const deleteJournalFailure = (error) => ({
+  type: c.DELETE_JOURNAL_FAILURE,
+  error,
+});
+
+export const deleteJournalSuccess = (journalId) => ({
+  type: c.DELETE_JOURNAL_SUCCESS,
+  deletedJournalId: journalId,
 });
 
 export const clearJournals = () => ({
