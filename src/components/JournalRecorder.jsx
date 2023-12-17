@@ -20,6 +20,15 @@ const modalStyles = {
   },
 };
 
+function objIsEmpty(obj) {
+  for (const prop in obj) {
+    if (Object.hasOwn(obj, prop)) {
+      return false;
+    }
+  }
+  return true;
+}
+
 const HOST = `${process.env.REACT_APP_API_HOST}`;
 
 const getNotesFromAPI = () => {
@@ -114,13 +123,18 @@ const deleteJournal = (journal) => {
           // the deleted journal's notes have been deleted on the backend
           // but we must clear the notes from ui state here too
           dispatch(a.clearNotes());
-          // also update current journal to first one
-          const dispatchingToChangeJournal =
-            getState().journals.journals[
-              Object.keys(getState().journals.journals)[0]
-            ];
-          dispatch(a.changeJournal(dispatchingToChangeJournal));
-          dispatch(getNotesFromAPI);
+          // If there are now no more journals, nullify the current journal
+          if (objIsEmpty(getState().journals.journals)) {
+            dispatch(a.nullifyJournal());
+          } else {
+            // we still have journals - update current journal to first one
+            const dispatchingToChangeJournal =
+              getState().journals.journals[
+                Object.keys(getState().journals.journals)[0]
+              ];
+            dispatch(a.changeJournal(dispatchingToChangeJournal));
+            dispatch(getNotesFromAPI);
+          }
         }
       })
       .catch((error) => {
