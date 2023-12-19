@@ -72,6 +72,7 @@ const NotesList = (props) => {
               <Note
                 note={props.stateNotes.notes[noteId]}
                 onClickOfDeleteNoteBtn={props.onClickOfDeleteNoteBtn}
+                onClickOfEditNoteBtn={props.onClickOfEditNoteBtn}
                 key={noteId}
               />
             ))}

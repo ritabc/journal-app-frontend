@@ -1,20 +1,21 @@
 import { combineReducers } from "redux";
-import newNoteFormVisibleOnPageReducer from "./new-note-form-visible-on-page-reducer";
 import currentlySelectedJournalReducer from "./currently-selected-journal-reducer";
-import newJournalModalVisibleReducer from "./new-journal-modal-visible-reducer";
 import googleSignInReducer from "./google-sign-in-reducer";
 import authenticationStatusChangeIsCompleteReducer from "./authentication-status-change-is-complete-reducer";
 import currentUserReducer from "./current-user-reducer";
 import journalsReducer from "./journals-reducer";
 import notesReducer from "./notes-reducer";
+import newOrEditNoteFormReducer from "./new-or-edit-note-form-reducer";
+import newOrEditJournalFormReducer from "./new-or-edit-journal-form-reducer";
 
 const rootReducer = combineReducers({
-  newNoteFormVisibleOnPage: newNoteFormVisibleOnPageReducer,
+  newOrEditNoteForm: newOrEditNoteFormReducer,
+  newOrEditJournalForm: newOrEditJournalFormReducer,
   notes: notesReducer,
   selectedJournal: currentlySelectedJournalReducer,
-  newJournalModalVisible: newJournalModalVisibleReducer,
   googleSignInToken: googleSignInReducer,
-  authenticationStatusChangeIsComplete: authenticationStatusChangeIsCompleteReducer,
+  authenticationStatusChangeIsComplete:
+    authenticationStatusChangeIsCompleteReducer,
   currentUser: currentUserReducer,
   journals: journalsReducer,
 });

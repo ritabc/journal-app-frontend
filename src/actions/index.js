@@ -1,18 +1,12 @@
 import * as c from "./../actions/ActionTypes";
 
-export const toggleNewNoteForm = () => ({
-  type: c.TOGGLE_NEW_NOTE_FORM,
+export const closeNewEditNoteForm = () => ({
+  type: c.CLOSE_NEW_EDIT_NOTE_FORM,
 });
 
-// export const addJournal = (journal) => {
-//   const { name, id, notes } = journal;
-//   return {
-//     type: c.ADD_JOURNAL,
-//     name,
-//     id,
-//     notes,
-//   };
-// };
+export const openFormToCreateNewNote = () => ({
+  type: c.OPEN_NEW_NOTE_FORM,
+});
 
 export const changeJournal = (journal) => {
   const { name, journalId } = journal;
@@ -29,8 +23,19 @@ export const nullifyJournal = () => {
   };
 };
 
-export const togggleNewJournalModal = () => ({
-  type: c.TOGGLE_NEW_JOURNAL_MODAL,
+export const showNewJournalModal = () => ({ type: c.OPEN_NEW_JOURNAL_FORM });
+
+export const showEditJournalModal = (journal) => {
+  const { name, journalId } = journal;
+  return {
+    type: c.OPEN_EDIT_JOURNAL_FORM,
+    name,
+    journalId,
+  };
+};
+
+export const hideNewEditJournalModal = () => ({
+  type: c.CLOSE_NEW_EDIT_JOURNAL_FORM,
 });
 
 export const googleSignInSuccess = (googleToken) => ({
@@ -94,14 +99,14 @@ export const getNotesFailure = (error) => ({
   error,
 });
 
-export const requestPostNewNote = () => ({
-  type: c.REQUEST_POST_NEW_NOTE,
+export const requestToPostPutNote = () => ({
+  type: c.REQUEST_POST_PUT_NOTE,
 });
 
-export const postNewNoteSuccess = (note) => {
+export const postPutNoteSuccess = (note) => {
   const { noteId, journalId, title, content, dateCreated, lastUpdated } = note;
   return {
-    type: c.POST_NEW_NOTE_SUCCESS,
+    type: c.POST_PUT_NOTE_SUCCESS,
     noteId,
     journalId,
     title,
@@ -111,8 +116,8 @@ export const postNewNoteSuccess = (note) => {
   };
 };
 
-export const postNewNoteFailure = (error) => ({
-  type: c.POST_NEW_NOTE_FAILURE,
+export const postPutNoteFailure = (error) => ({
+  type: c.POST_NEW_EDIT_NOTE_FAILURE,
   error,
 });
 
@@ -132,11 +137,11 @@ export const deleteNoteSuccess = (noteId) => ({
   deletedNoteId: noteId,
 });
 
-export const requestPostNewJournal = () => ({
-  type: c.REQUEST_POST_NEW_JOURNAL,
+export const requestToPostPutNewJournal = () => ({
+  type: c.REQUEST_POST_PUT_JOURNAL,
 });
 
-export const postNewJournalSuccess = (journal) => {
+export const postPutJournalSuccess = (journal) => {
   const { journalId, name } = journal;
   return {
     type: c.POST_NEW_JOURNAL_SUCCESS,
@@ -145,7 +150,7 @@ export const postNewJournalSuccess = (journal) => {
   };
 };
 
-export const postNewJournalFailure = (error) => ({
+export const postPutJournalFailure = (error) => ({
   type: c.POST_NEW_JOURNAL_FAILURE,
   error,
 });
@@ -171,3 +176,13 @@ export const clearJournals = () => ({
 export const clearNotes = () => ({
   type: c.CLEAR_NOTES,
 });
+
+export const openEditNoteForm = (note) => {
+  const { noteId, title, content } = note;
+  return {
+    type: c.OPEN_EDIT_NOTE_FORM,
+    noteId,
+    title,
+    content,
+  };
+};

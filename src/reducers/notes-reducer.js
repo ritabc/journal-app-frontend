@@ -27,9 +27,9 @@ export default (state = defaultState, action) => {
         isLoading: false,
         error: action.error,
       });
-    case c.REQUEST_POST_NEW_NOTE:
+    case c.REQUEST_POST_PUT_NOTE:
       return Object.assign({}, state, { isLoading: true });
-    case c.POST_NEW_NOTE_SUCCESS:
+    case c.POST_PUT_NOTE_SUCCESS:
       let newNotesList = { ...state.notes };
       const { title, content, noteId, journalId, dateCreated, lastUpdated } =
         action;
@@ -45,7 +45,7 @@ export default (state = defaultState, action) => {
         isLoading: false,
         notes: newNotesList,
       });
-    case c.POST_NEW_NOTE_FAILURE:
+    case c.POST_NEW_EDIT_NOTE_FAILURE:
       return Object.assign({}, state, {
         isLoading: false,
         error: action.error,

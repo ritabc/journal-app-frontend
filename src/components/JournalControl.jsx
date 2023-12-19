@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NotesList from "./NotesList";
-import NewNoteForm from "./NewNoteForm";
+import NoteForm from "./NoteForm";
 import { connect } from "react-redux";
 import * as a from "./../actions";
 import * as e from "../api/errors";
@@ -45,13 +45,12 @@ const deleteNote = (note) => {
 const postNewNote = (newNote) => {
   const { title, content, journalId } = newNote;
   return async (dispatch, getState) => {
-    dispatch(a.requestPostNewNote());
+    dispatch(a.requestToPostPutNote());
     const response = await fetch(`${HOST}/journals/${journalId}/notes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: getState().currentUser.jwt,
-        // Authorization: "AbC",
       },
       body: JSON.stringify({ note: { title, content, journalId } }),
     });
@@ -59,11 +58,11 @@ const postNewNote = (newNote) => {
       // request failed
       if (response.status === e.UNAUTHORIZED_STATUS_CODE) {
         // due to 401
-        dispatch(a.postNewNoteFailure(e.USER_NOT_AUTHORIZED));
+        dispatch(a.postPutNoteFailure(e.USER_NOT_AUTHORIZED));
         alert(e.USER_NOT_AUTHORIZED);
       } else {
         // failed due to unknown reason
-        dispatch(a.postNewNoteFailure(response.statusText));
+        dispatch(a.postPutNoteFailure(response.statusText));
         alert(response.statusText);
       }
     } else {
@@ -71,7 +70,49 @@ const postNewNote = (newNote) => {
       const body = await response.json();
       const { journal_id, title, content, created_at, updated_at, id } = body;
       dispatch(
-        a.postNewNoteSuccess({
+        a.postPutNoteSuccess({
+          noteId: id,
+          journalId: journal_id,
+          dateCreated: created_at,
+          lastUpdated: updated_at,
+          title,
+          content,
+        })
+      );
+    }
+    return response;
+  };
+};
+
+const putNoteEdit = (updatedNote) => {
+  const { noteId, title, content, journalId } = updatedNote;
+  return async (dispatch, getState) => {
+    dispatch(a.requestToPostPutNote()); // assign state.isLoading = true
+    const response = await fetch(
+      `${HOST}/journals/${journalId}/notes/${noteId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: getState().currentUser.jwt,
+        },
+        body: JSON.stringify({ note: { title, content, journalId } }),
+      }
+    );
+    if (!response.ok) {
+      if (response.status === e.UNAUTHORIZED_STATUS_CODE) {
+        // 401
+        dispatch(a.postPutNoteFailure(e.USER_NOT_AUTHORIZED));
+        alert(e.USER_NOT_AUTHORIZED);
+      } else {
+        dispatch(a.postPutNoteFailure(response.statusText));
+        alert(response.statusText);
+      }
+    } else {
+      const body = await response.json();
+      const { journal_id, title, content, created_at, updated_at, id } = body;
+      dispatch(
+        a.postPutNoteSuccess({
           noteId: id,
           journalId: journal_id,
           dateCreated: created_at,
@@ -86,17 +127,21 @@ const postNewNote = (newNote) => {
 };
 
 class JournalControl extends Component {
-  handleAddingNewNoteToJournal = (newNote) => {
+  handleNewNoteAddSubmitBtnClick = (newNote) => {
     const { dispatch } = this.props;
-    const toggleFormVisibilityAction = a.toggleNewNoteForm();
     dispatch(postNewNote(newNote));
-    dispatch(toggleFormVisibilityAction);
+    dispatch(a.closeNewEditNoteForm());
+  };
+
+  handleNoteEditSubmitBtnClick = (updatedNote) => {
+    const { dispatch } = this.props;
+    dispatch(putNoteEdit(updatedNote));
+    dispatch(a.closeNewEditNoteForm());
   };
 
   handleRequestToCreateNote = () => {
     const { dispatch } = this.props;
-    const toggleFormVisibilityAction = a.toggleNewNoteForm();
-    dispatch(toggleFormVisibilityAction);
+    dispatch(a.openFormToCreateNewNote());
   };
 
   handleRequestToDeleteNote = (note) => {
@@ -104,13 +149,25 @@ class JournalControl extends Component {
     dispatch(deleteNote(note));
   };
 
+  handleEditNoteBtnClick = (entityToEdit) => {
+    const { dispatch } = this.props;
+    const notes = this.props.notes.notes;
+    const noteToEdit = Object.values(notes).find(
+      (n) => n.noteId === entityToEdit.entityId
+    );
+    dispatch(a.openEditNoteForm(noteToEdit));
+  };
+
   render() {
     let currentlyVisibleState = null;
-    if (this.props.newNoteFormVisibleOnPage) {
+    if (this.props.newOrEditNoteForm.visible) {
       currentlyVisibleState = (
-        <NewNoteForm
-          onNewNoteCreation={this.handleAddingNewNoteToJournal}
+        <NoteForm
+          onNewNoteCreation={this.handleNewNoteAddSubmitBtnClick}
+          onNoteEditSubmit={this.handleNoteEditSubmitBtnClick}
           currentJournal={this.props.currentJournal}
+          whichForm={this.props.newOrEditNoteForm.whichForm}
+          noteToEdit={this.props.newOrEditNoteForm.note}
         />
       );
     } else {
@@ -120,6 +177,7 @@ class JournalControl extends Component {
           currentJournal={this.props.currentJournal}
           stateNotes={this.props.notes}
           onClickOfDeleteNoteBtn={this.handleRequestToDeleteNote}
+          onClickOfEditNoteBtn={this.handleEditNoteBtnClick}
         />
       );
     }
@@ -129,9 +187,9 @@ class JournalControl extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    newNoteFormVisibleOnPage: state.newNoteFormVisibleOnPage,
     notes: state.notes,
     currentJournal: state.selectedJournal,
+    newOrEditNoteForm: state.newOrEditNoteForm,
   };
 };
 

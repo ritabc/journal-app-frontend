@@ -12,23 +12,35 @@ const saveNoteBtnStyles = {
   color: "#f8f9fa",
 };
 
-const NewNoteForm = (props) => {
-  function handleNewNoteFormSubmission(event) {
+const NoteForm = (props) => {
+  function handleFormSubmit(event) {
     event.preventDefault();
-    props.onNewNoteCreation({
-      title: event.target.title.value,
-      content: event.target.content.value,
-      journalId: event.target.journalId.value,
-    });
+    if (props.whichForm === "new") {
+      props.onNewNoteCreation({
+        title: event.target.title.value,
+        content: event.target.content.value,
+        journalId: event.target.journalId.value,
+      });
+    } else if (props.whichForm === "edit") {
+      props.onNoteEditSubmit({
+        noteId: props.noteToEdit.noteId,
+        title: event.target.title.value,
+        content: event.target.content.value,
+        journalId: event.target.journalId.value,
+      });
+    }
   }
+
+  const newForm = props.whichForm === "new";
 
   return (
     <React.Fragment>
       <div className="container-fluid">
         <h2 className="py-3" style={titleStyles}>
-          New Note in Journal: {props.currentJournal.name}
+          {newForm ? "New" : "Edit"} Note in Journal:{" "}
+          {props.currentJournal.name}
         </h2>
-        <form onSubmit={handleNewNoteFormSubmission}>
+        <form onSubmit={handleFormSubmit}>
           <input
             type="hidden"
             name="journalId"
@@ -40,6 +52,9 @@ const NewNoteForm = (props) => {
               className="form-control"
               id="titleInput"
               placeholder="Note Title"
+              defaultValue={
+                props.whichForm === "new" ? "" : props.noteToEdit.title
+              }
               name="title"
             />
             <label htmlFor="titleInput" style={inputStyles}>
@@ -52,6 +67,9 @@ const NewNoteForm = (props) => {
               id="contentInput"
               className="form-control"
               placeholder="Enter note content"
+              defaultValue={
+                props.whichForm === "new" ? "" : props.noteToEdit.content
+              }
               style={textAreaStyles}
             ></textarea>
             <label htmlFor="contentInput" style={inputStyles}>
@@ -71,4 +89,4 @@ const NewNoteForm = (props) => {
   );
 };
 
-export default NewNoteForm;
+export default NoteForm;

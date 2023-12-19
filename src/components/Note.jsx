@@ -1,6 +1,6 @@
 import React from "react";
-import { mockComponent } from "react-dom/test-utils";
 import moment from "moment";
+import EditButton from "./EditButton";
 
 const noteCardTitleStyles = {};
 
@@ -13,6 +13,7 @@ const Note = (props) => {
       noteId: props.note.noteId,
     });
   }
+
   return (
     <React.Fragment>
       <div className="col-4">
@@ -23,9 +24,10 @@ const Note = (props) => {
                 <h4>{props.note.title}</h4>
                 <h5>{moment(props.note.dateCreated).format("MMM Do YYYY")}</h5>
               </div>
-              <div className="edit-btn px-0 mx-1 col-1">
-                <button>E</button>
-              </div>
+              <EditButton
+                idOfEntityToEdit={props.note.noteId}
+                onClickOfEditBtn={props.onClickOfEditNoteBtn}
+              />
               <div className="delete-btn px-0 mx-1 col-1">
                 <button onClick={handleDeleteNoteBtnClick}>D</button>
               </div>

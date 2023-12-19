@@ -25,7 +25,7 @@ export default (state = defaultState, action) => {
         isLoading: false,
         error: action.error,
       });
-    case c.REQUEST_POST_NEW_JOURNAL:
+    case c.REQUEST_POST_PUT_JOURNAL:
       return Object.assign({}, state, { isLoading: true });
     case c.POST_NEW_JOURNAL_SUCCESS:
       const { name, journalId } = action;

@@ -1,4 +1,6 @@
 import React from "react";
+import EditButton from "./EditButton";
+import * as a from "../actions";
 
 const selectedStyle = {
   color: "#343a40",
@@ -20,12 +22,12 @@ const nonSelectedBtnStyle = {
 
 const ulStyles = { listStyleType: "none" };
 
-const selectedJournalDeleteBtnStyle = {
+const selectedJournalCrudBtnStyle = {
   backgroundColor: "#f8f9fa",
   width: "auto",
 };
 
-const nonSelectedJournalDeleteBtnStyle = { opacity: "0" };
+const nonSelectedJournalCrudBtnStyle = { opacity: "0" };
 
 const JournalsList = (props) => {
   function handleDeleteJournalBtnClick(journalId) {
@@ -41,13 +43,10 @@ const JournalsList = (props) => {
   }
 
   let list = null;
-  if (
-    props.stateJournals.length !== 0 &&
-    props.currentlySelectedJournal !== null
-  ) {
+  if (props.journals.length !== 0 && props.currentlySelectedJournal !== null) {
     list = (
       <ul style={ulStyles}>
-        {Object.values(props.stateJournals).map((journal) => {
+        {Object.values(props.journals).map((journal) => {
           return (
             <li
               style={
@@ -72,14 +71,24 @@ const JournalsList = (props) => {
                   >
                     {journal.name}
                   </button>
+                  <EditButton
+                    idOfEntityToEdit={journal.journalId}
+                    onClickOfEditBtn={props.onClickOfEditJournalBtn}
+                    style={
+                      journal.journalId ===
+                      props.currentlySelectedJournal.journalId
+                        ? selectedJournalCrudBtnStyle
+                        : nonSelectedJournalCrudBtnStyle
+                    }
+                  />
                   <button
                     onClick={handleDeleteJournalBtnClick(journal.journalId)}
                     className="col-1 px-2"
                     style={
                       journal.journalId ===
                       props.currentlySelectedJournal.journalId
-                        ? selectedJournalDeleteBtnStyle
-                        : nonSelectedJournalDeleteBtnStyle
+                        ? selectedJournalCrudBtnStyle
+                        : nonSelectedJournalCrudBtnStyle
                     }
                   >
                     D

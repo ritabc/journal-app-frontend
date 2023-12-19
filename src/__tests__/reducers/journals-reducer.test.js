@@ -64,7 +64,7 @@ describe("journalsReducer", () => {
 
   test("requesting journal POST should successfully change isLoading from false to true", () => {
     action = {
-      type: c.REQUEST_POST_NEW_JOURNAL,
+      type: c.REQUEST_POST_PUT_JOURNAL,
     };
     expect(journalsReducer(defaultState, action)).toEqual({
       isLoading: true,

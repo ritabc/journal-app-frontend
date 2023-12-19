@@ -15,7 +15,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
   {
-    newNoteFormVisibleOnPage: false,
+    newOrEditNoteForm: { visible: false, whichForm: "new", note: {} },
+    newOrEditJournalForm: { visible: false, whichForm: "new", journal: {} },
     notes: {
       isLoading: false,
       notes: {},

@@ -87,7 +87,7 @@ describe("notesReducer", () => {
 
   test("requesting note POST should successfully change isLoading from false to true", () => {
     action = {
-      type: c.REQUEST_POST_NEW_NOTE,
+      type: c.REQUEST_POST_PUT_NOTE,
     };
     expect(notesReducer(defaultState, action)).toEqual({
       isLoading: true,
@@ -97,16 +97,10 @@ describe("notesReducer", () => {
   });
 
   test("Successfully POSTing new note should change isLoading to false and update notes", () => {
-    const {
-      title,
-      content,
-      noteId,
-      journalId,
-      dateCreated,
-      lastUpdated,
-    } = notesData;
+    const { title, content, noteId, journalId, dateCreated, lastUpdated } =
+      notesData;
     action = {
-      type: c.POST_NEW_NOTE_SUCCESS,
+      type: c.POST_PUT_NOTE_SUCCESS,
       title,
       content,
       noteId,
@@ -132,7 +126,7 @@ describe("notesReducer", () => {
   test("failing to POST new note should change isLoading to false and add an error message", () => {
     const error = "An error";
     action = {
-      type: c.POST_NEW_NOTE_FAILURE,
+      type: c.POST_NEW_EDIT_NOTE_FAILURE,
       error,
     };
     expect(notesReducer(loadingState, action)).toEqual({

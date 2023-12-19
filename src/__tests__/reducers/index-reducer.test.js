@@ -13,7 +13,7 @@ describe("rootReducer", () => {
   test("Should return default state if no action type is recognized", () => {
     expect(rootReducer({}, { type: null })).toEqual({
       notes: { error: null, isLoading: false, notes: {} },
-      newNoteFormVisibleOnPage: false,
+      newNoteFormVisibleOnPage: false, // TODO update to follow along with state changes
       journals: { error: null, isLoading: false, journals: {} },
       selectedJournal: {},
       newJournalModalVisible: false,
