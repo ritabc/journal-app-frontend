@@ -10,7 +10,7 @@ const EditButton = (props) => {
   return (
     <React.Fragment>
       <div className="edit-btn">
-        <button class="btn btn-dark btn-sm" onClick={handleEditBtnClick}>
+        <button className="btn btn-dark btn-sm" onClick={handleEditBtnClick}>
           <Pencil size={15} />
         </button>
       </div>

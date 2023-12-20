@@ -100,7 +100,7 @@ describe("notesReducer", () => {
     const { title, content, noteId, journalId, dateCreated, lastUpdated } =
       notesData;
     action = {
-      type: c.POST_PUT_NOTE_SUCCESS,
+      type: c.POST_NOTE_SUCCESS,
       title,
       content,
       noteId,

@@ -1,31 +1,30 @@
 import rootReducer from "../../reducers/index";
 import { createStore } from "redux";
-import newNoteFormVisibleOnPageReducer from "../../reducers/new-note-form-visible-on-page-reducer";
+import newEditNoteFormReducer from "../../reducers/new-or-edit-note-form-reducer";
 import { v4 } from "uuid";
 import * as c from "./../../actions/ActionTypes";
-import journalListReducer from "../../reducers/journal-list-reducer";
 import currentlySelectedJournalReducer from "../../reducers/currently-selected-journal-reducer";
-import newJournalModalVisibleReducer from "../../reducers/new-journal-modal-visible-reducer";
+import newEditJournalFormReducer from "../../reducers/new-or-edit-journal-form-reducer";
 
 let store = createStore(rootReducer);
 
 describe("rootReducer", () => {
   test("Should return default state if no action type is recognized", () => {
     expect(rootReducer({}, { type: null })).toEqual({
+      newOrEditNoteForm: { visible: false, whichForm: "new", note: {} },
+      newOrEditJournalForm: { visible: false, whichForm: "new", journal: {} },
       notes: { error: null, isLoading: false, notes: {} },
-      newNoteFormVisibleOnPage: false, // TODO update to follow along with state changes
       journals: { error: null, isLoading: false, journals: {} },
       selectedJournal: {},
-      newJournalModalVisible: false,
       googleSignInToken: {},
-      authenticationStatusChangeIsComplete: true,
       currentUser: {},
+      authenticationStatusChangeIsComplete: true,
     });
   });
 
-  test("Check that initial state of newNoteFormVisibileOnPageReducer matches root reducer", () => {
-    expect(store.getState().newNoteFormVisibleOnPage).toEqual(
-      newNoteFormVisibleOnPageReducer(undefined, { type: null })
+  test("Check that initial state of newEditNoteForm matches root reducer", () => {
+    expect(store.getState().newOrEditNoteForm).toEqual(
+      newEditNoteFormReducer(undefined, { type: null })
     );
   });
 
@@ -35,19 +34,19 @@ describe("rootReducer", () => {
     );
   });
 
-  test("Check that initial state of newJournalModalVisible matches root reducer", () => {
-    expect(store.getState().newJournalModalVisible).toEqual(
-      newJournalModalVisibleReducer(undefined, { type: null })
+  test("Check that initial state of newOrEditJournalForm matches root reducer", () => {
+    expect(store.getState().newOrEditJournalForm).toEqual(
+      newEditJournalFormReducer(undefined, { type: null })
     );
   });
 
-  test("Check that TOGGLE_FORM action works for newNoteFormVisibleOnPageReducer and root reducer", () => {
+  test("Check that OPEN_NEW_NOTE_FORM action works for newEditNoteFormReducer and root reducer", () => {
     const action = {
-      type: c.TOGGLE_NEW_NOTE_FORM,
+      type: c.OPEN_NEW_NOTE_FORM,
     };
     store.dispatch(action);
-    expect(store.getState().newNoteFormVisibleOnPage).toEqual(
-      newNoteFormVisibleOnPageReducer(undefined, action)
+    expect(store.getState().newOrEditNoteForm).toEqual(
+      newEditNoteFormReducer(undefined, action)
     );
   });
 
@@ -64,13 +63,13 @@ describe("rootReducer", () => {
     );
   });
 
-  test("Check that TOGGLE_NEW_JOURNAL_MODAL action works for journalListReducer and root reducer", () => {
+  test("Check that OPEN_NEW_JOURNAL_FORM action works for journalListReducer and root reducer", () => {
     const action = {
-      type: c.TOGGLE_NEW_JOURNAL_MODAL,
+      type: c.OPEN_NEW_JOURNAL_FORM,
     };
     store.dispatch(action);
-    expect(store.getState().newJournalModalVisible).toEqual(
-      newJournalModalVisibleReducer(undefined, action)
+    expect(store.getState().newOrEditJournalForm).toEqual(
+      newEditJournalFormReducer(undefined, action)
     );
   });
 });
