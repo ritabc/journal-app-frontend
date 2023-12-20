@@ -122,7 +122,6 @@ const putNoteEdit = (updatedNote) => {
           content,
         })
       );
-      // also remove original note from state
     }
     return response;
   };
