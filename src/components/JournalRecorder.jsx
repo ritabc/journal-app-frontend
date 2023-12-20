@@ -13,7 +13,6 @@ const JournalRecorder = () => {
           <JournalControl />
         </div>
       </div>
-      {/* {modal} */}
     </React.Fragment>
   );
 };

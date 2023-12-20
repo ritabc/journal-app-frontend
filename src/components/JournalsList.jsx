@@ -1,6 +1,6 @@
 import React from "react";
 import EditButton from "./EditButton";
-import * as a from "../actions";
+import DeleteButton from "./DeleteButton";
 
 const selectedStyle = {
   color: "#343a40",
@@ -22,12 +22,9 @@ const nonSelectedBtnStyle = {
 
 const ulStyles = { listStyleType: "none" };
 
-const selectedJournalCrudBtnStyle = {
-  backgroundColor: "#f8f9fa",
-  width: "auto",
+const notSelectedEditDeleteBtnStyles = {
+  display: "none",
 };
-
-const nonSelectedJournalCrudBtnStyle = { opacity: "0" };
 
 const JournalsList = (props) => {
   function handleDeleteJournalBtnClick(journalId) {
@@ -47,6 +44,8 @@ const JournalsList = (props) => {
     list = (
       <ul style={ulStyles}>
         {Object.values(props.journals).map((journal) => {
+          const thisJournalIsCurrentlySelected =
+            journal.journalId === props.currentlySelectedJournal.journalId;
           return (
             <li
               style={
@@ -57,42 +56,41 @@ const JournalsList = (props) => {
               key={journal.journalId}
             >
               <div className="container">
-                <div className="row mx-0">
-                  <button
-                    onClick={handleChangeCurrentJournal}
-                    className="btn col"
-                    name={journal.journalId}
+                <div className="row">
+                  <div className="col journal-name px-0">
+                    <button
+                      onClick={handleChangeCurrentJournal}
+                      className="btn"
+                      name={journal.journalId}
+                      style={
+                        thisJournalIsCurrentlySelected
+                          ? selectedBtnStyle
+                          : nonSelectedBtnStyle
+                      }
+                    >
+                      {journal.name}
+                    </button>
+                  </div>
+                  <div
+                    className="btn-group col-lg-5"
                     style={
-                      journal.journalId ===
-                      props.currentlySelectedJournal.journalId
-                        ? selectedBtnStyle
-                        : nonSelectedBtnStyle
+                      thisJournalIsCurrentlySelected
+                        ? undefined
+                        : notSelectedEditDeleteBtnStyles
                     }
                   >
-                    {journal.name}
-                  </button>
-                  <EditButton
-                    idOfEntityToEdit={journal.journalId}
-                    onClickOfEditBtn={props.onClickOfEditJournalBtn}
-                    style={
-                      journal.journalId ===
-                      props.currentlySelectedJournal.journalId
-                        ? selectedJournalCrudBtnStyle
-                        : nonSelectedJournalCrudBtnStyle
-                    }
-                  />
-                  <button
-                    onClick={handleDeleteJournalBtnClick(journal.journalId)}
-                    className="col-1 px-2"
-                    style={
-                      journal.journalId ===
-                      props.currentlySelectedJournal.journalId
-                        ? selectedJournalCrudBtnStyle
-                        : nonSelectedJournalCrudBtnStyle
-                    }
-                  >
-                    D
-                  </button>
+                    <EditButton
+                      idOfEntityToEdit={journal.journalId}
+                      onClickOfEditBtn={props.onClickOfEditJournalBtn}
+                    />
+                    <div className="px-1"></div>
+                    <DeleteButton
+                      idOfEntityToEdit={journal.journalId}
+                      onClickOfDeleteBtn={handleDeleteJournalBtnClick(
+                        journal.journalId
+                      )}
+                    />
+                  </div>
                 </div>
               </div>
             </li>

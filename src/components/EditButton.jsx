@@ -1,4 +1,5 @@
 import React from "react";
+import { Pencil } from "react-bootstrap-icons";
 
 const EditButton = (props) => {
   function handleEditBtnClick() {
@@ -8,8 +9,10 @@ const EditButton = (props) => {
   }
   return (
     <React.Fragment>
-      <div className="edit-btn px-0 mx-1 col-1">
-        <button onClick={handleEditBtnClick}>E</button>
+      <div className="edit-btn">
+        <button class="btn btn-dark btn-sm" onClick={handleEditBtnClick}>
+          <Pencil size={15} />
+        </button>
       </div>
     </React.Fragment>
   );

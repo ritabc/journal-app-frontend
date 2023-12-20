@@ -70,7 +70,7 @@ const postNewNote = (newNote) => {
       const body = await response.json();
       const { journal_id, title, content, created_at, updated_at, id } = body;
       dispatch(
-        a.postPutNoteSuccess({
+        a.postNoteSuccess({
           noteId: id,
           journalId: journal_id,
           dateCreated: created_at,
@@ -109,10 +109,11 @@ const putNoteEdit = (updatedNote) => {
         alert(response.statusText);
       }
     } else {
+      // put was successful
       const body = await response.json();
       const { journal_id, title, content, created_at, updated_at, id } = body;
       dispatch(
-        a.postPutNoteSuccess({
+        a.putNoteSuccess({
           noteId: id,
           journalId: journal_id,
           dateCreated: created_at,
@@ -121,6 +122,7 @@ const putNoteEdit = (updatedNote) => {
           content,
         })
       );
+      // also remove original note from state
     }
     return response;
   };

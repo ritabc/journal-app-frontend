@@ -29,7 +29,7 @@ export default (state = defaultState, action) => {
       });
     case c.REQUEST_POST_PUT_NOTE:
       return Object.assign({}, state, { isLoading: true });
-    case c.POST_PUT_NOTE_SUCCESS:
+    case c.POST_NOTE_SUCCESS:
       let newNotesList = { ...state.notes };
       const { title, content, noteId, journalId, dateCreated, lastUpdated } =
         action;
@@ -44,6 +44,30 @@ export default (state = defaultState, action) => {
       return Object.assign({}, state, {
         isLoading: false,
         notes: newNotesList,
+      });
+    case c.PUT_NOTE_SUCCESS:
+      // copy state.notes into updatedNotesList, except overwrite the edited one
+      let updatedNotesList = {};
+
+      for (let key in state.notes) {
+        const note = state.notes[key];
+        if (note.noteId === action.noteId) {
+          updatedNotesList[key] = {
+            title: action.title,
+            content: action.content,
+            journalId: action.journalId,
+            noteId: action.noteId,
+            dateCreated: action.dateCreated,
+            lastUpdated: action.lastUpdated,
+          };
+        } else {
+          updatedNotesList[key] = note;
+        }
+      }
+
+      return Object.assign({}, state, {
+        isLoading: false,
+        notes: updatedNotesList,
       });
     case c.POST_NEW_EDIT_NOTE_FAILURE:
       return Object.assign({}, state, {

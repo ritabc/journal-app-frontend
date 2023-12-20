@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import EditButton from "./EditButton";
+import DeleteButton from "./DeleteButton";
 
 const noteCardTitleStyles = {};
 
@@ -24,12 +25,17 @@ const Note = (props) => {
                 <h4>{props.note.title}</h4>
                 <h5>{moment(props.note.dateCreated).format("MMM Do YYYY")}</h5>
               </div>
-              <EditButton
-                idOfEntityToEdit={props.note.noteId}
-                onClickOfEditBtn={props.onClickOfEditNoteBtn}
-              />
-              <div className="delete-btn px-0 mx-1 col-1">
-                <button onClick={handleDeleteNoteBtnClick}>D</button>
+              <div class="btn-group col-lg-4">
+                <EditButton
+                  idOfEntityToEdit={props.note.noteId}
+                  onClickOfEditBtn={props.onClickOfEditNoteBtn}
+                />
+                <div className="px-1"></div>
+
+                <DeleteButton
+                  idOfEntityToEdit={props.note.noteId}
+                  onClickOfDeleteBtn={handleDeleteNoteBtnClick}
+                />
               </div>
             </div>
             <p className="card-text">{props.note.content}</p>

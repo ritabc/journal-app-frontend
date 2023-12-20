@@ -211,6 +211,7 @@ const putUpdatedJournal = (updatedJournal) => {
       const body = await response.json();
       const { name, id } = body;
       dispatch(a.postPutJournalSuccess({ journalId: id, name }));
+      dispatch(a.changeJournal({ journalId: id, name }));
     }
   };
 };

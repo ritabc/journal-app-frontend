@@ -103,10 +103,23 @@ export const requestToPostPutNote = () => ({
   type: c.REQUEST_POST_PUT_NOTE,
 });
 
-export const postPutNoteSuccess = (note) => {
+export const postNoteSuccess = (note) => {
   const { noteId, journalId, title, content, dateCreated, lastUpdated } = note;
   return {
-    type: c.POST_PUT_NOTE_SUCCESS,
+    type: c.POST_NOTE_SUCCESS,
+    noteId,
+    journalId,
+    title,
+    content,
+    dateCreated,
+    lastUpdated,
+  };
+};
+
+export const putNoteSuccess = (note) => {
+  const { noteId, journalId, title, content, dateCreated, lastUpdated } = note;
+  return {
+    type: c.PUT_NOTE_SUCCESS,
     noteId,
     journalId,
     title,
