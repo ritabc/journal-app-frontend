@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import JournalRecorder from "./JournalRecorder";
 import { connect } from "react-redux";
-import GoogleLogIn from "./GoogleLogIn";
+import LoginWithGoogle from "./LoginWithGoogle";
 import Header from "./Header";
 
 const logInStylesContainer = {
@@ -50,7 +50,7 @@ class App extends Component {
             <div style={innerBorderStyles} className="p-5">
               <h2>Log In/Sign Up With Google</h2>
               <div style={googleSignInStyles} className="pt-2">
-                <GoogleLogIn />
+                <LoginWithGoogle />
               </div>
             </div>
           </div>

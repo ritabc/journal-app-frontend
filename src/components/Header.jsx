@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleLogOut from "./GoogleLogOut";
+import LogoutWithGoogle from "./LogoutWithGoogle";
 const Header = (props) => {
   const headerStyles = {
     display: "flex",
@@ -28,7 +28,7 @@ const Header = (props) => {
     currentUserWelcome = (
       <span className="me-3">Logged In As {props.currentUser.givenName}</span>
     );
-    logOutBtn = <GoogleLogOut />;
+    logOutBtn = <LogoutWithGoogle />;
   }
   return (
     <React.Fragment>

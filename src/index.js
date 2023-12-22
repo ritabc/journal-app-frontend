@@ -10,6 +10,7 @@ import rootReducer from "./reducers/index";
 import { Provider } from "react-redux";
 import data from "./data/staticData";
 import thunkMiddleware from "redux-thunk";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -40,7 +41,9 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <App data={data} />
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+      <App data={data} />
+    </GoogleOAuthProvider>
   </Provider>,
   document.getElementById("root")
 );
