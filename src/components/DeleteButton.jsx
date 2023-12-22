@@ -9,7 +9,10 @@ const DeleteButton = (props) => {
   return (
     <React.Fragment>
       <div className="delete-btn">
-        <button class="btn btn-danger btn-sm" onClick={handleDeleteBtnClick}>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={handleDeleteBtnClick}
+        >
           <Trash size={15} />
         </button>
       </div>

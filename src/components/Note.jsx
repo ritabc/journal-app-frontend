@@ -25,7 +25,7 @@ const Note = (props) => {
                 <h4>{props.note.title}</h4>
                 <h5>{moment(props.note.dateCreated).format("MMM Do YYYY")}</h5>
               </div>
-              <div class="btn-group col-lg-4">
+              <div className="btn-group col-lg-4">
                 <EditButton
                   idOfEntityToEdit={props.note.noteId}
                   onClickOfEditBtn={props.onClickOfEditNoteBtn}

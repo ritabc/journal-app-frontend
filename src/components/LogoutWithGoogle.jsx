@@ -3,14 +3,6 @@ import { googleLogout } from "@react-oauth/google";
 import * as a from "../actions";
 import { connect } from "react-redux";
 
-// const CLIENT_ID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
-
-// const innerBorderStyles = {
-//   border: "6px solid #212529",
-//   borderRadius: "10px",
-//   backgroundColor: "#f8f9fa",
-// };
-
 const logOutDivStyles = {
   color: "#f8f9fa",
   border: "3px solid #5A2762",
@@ -48,7 +40,8 @@ const textStyle = {
 };
 
 class LogoutWithGoogle extends React.Component {
-  logout = (response) => {
+  logout = async () => {
+    await googleLogout();
     const { dispatch } = this.props;
     let signOutTokenAction = a.googleSignOutSuccess();
     let removeCurrentUserAction = a.removeCurrentUser();
@@ -56,18 +49,13 @@ class LogoutWithGoogle extends React.Component {
     dispatch(removeCurrentUserAction);
   };
 
-  handleLogoutFailure = (response) => {
-    console.log(response);
-    alert("Failed to log out");
-  };
-
   render() {
     return (
       <div style={logOutDivStyles}>
-        <button type="button" style={buttonStyles} onClick={googleLogout}>
+        <button type="button" style={buttonStyles} onClick={this.logout}>
           <div style={svgStyles}>
             <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
-              <g fill="#000" fill-rule="evenodd">
+              <g fill="#000" fillRule="evenodd">
                 <path
                   d="M9 3.48c1.69 0 2.83.73 3.48 1.34l2.54-2.48C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l2.91 2.26C4.6 5.05 6.62 3.48 9 3.48z"
                   fill="#EA4335"
@@ -91,16 +79,6 @@ class LogoutWithGoogle extends React.Component {
           <span style={textStyle}>Sign Out</span>
         </button>
       </div>
-
-      // <div style={logOutBtnStyles}>
-      //   <div style={innerBorderStyles}>
-      //     <GoogleLogout
-      //       clientId={CLIENT_ID}
-      //       buttonText="Sign Out"
-      //       onLogoutSuccess={this.logout}
-      //       onFailure={this.handleLogoutFailure}
-      //     />
-      //   </div>
     );
   }
 }

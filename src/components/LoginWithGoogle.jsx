@@ -19,37 +19,32 @@ class LoginWithGoogle extends React.Component {
     //   Try logging in first
     let tokenData = JSON.stringify({
       user: {
-        // google_id_token: response.tokenId,
         google_id_token: response.credential,
       },
     });
-    const resp1 = await fetch(`${HOST}/login`, {
+    const loginResponse = await fetch(`${HOST}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: tokenData,
     });
-    console.log(resp1);
-    const resp2 = await resp1.json();
-    console.log(resp2);
-    if ("error" in resp2) {
-      if (resp1.error === e.USER_NOT_FOUND) {
+    const loginRespBody = await loginResponse.json();
+    if ("error" in loginRespBody) {
+      if (loginRespBody.error === e.USER_NOT_FOUND) {
         // If receive user not found error, sign the user up instead
-        const resp3 = await fetch(`${HOST}/signup`, {
+        const signupResponse = await fetch(`${HOST}/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: tokenData,
         });
-        console.log(resp3);
-        const resp4 = await resp3.json();
-        console.log(resp4);
+        const signupRespBody = await signupResponse.json();
         // We have logged in a user for the first time
-        const { given_name, family_name, email, id } = resp4.user;
+        const { given_name, family_name, email, id } = signupRespBody.user;
         const saveUserAction = a.addCurrentUser({
-          jwt: resp4.token,
+          jwt: signupRespBody.token,
           givenName: given_name,
           familyName: family_name,
           email: email,
@@ -61,14 +56,14 @@ class LoginWithGoogle extends React.Component {
         dispatch(authenticationDoneLoadingAction);
       } else {
         // auth error for some other reason
-        dispatch(a.googleSignInFailure(resp2.error));
-        alert(resp2.error);
+        dispatch(a.googleSignInFailure(loginRespBody.error));
+        alert(loginRespBody.error);
       }
     } else {
       // We have logged in a user from the getgo
-      const { given_name, family_name, email, id } = resp2.user;
+      const { given_name, family_name, email, id } = loginRespBody.user;
       const saveUserAction = a.addCurrentUser({
-        jwt: resp2.token,
+        jwt: loginRespBody.token,
         givenName: given_name,
         familyName: family_name,
         email: email,
@@ -82,18 +77,15 @@ class LoginWithGoogle extends React.Component {
   };
 
   handleLoginFailure = (response) => {
-    console.log(response);
     alert("Failed to log in");
   };
+
   render() {
     return (
       <GoogleLogin
-        // clientId={CLIENT_ID}
         text="Sign In"
         onSuccess={this.login}
         onError={this.handleLoginFailure}
-        // cookiePolicy={"single_host_origin"}
-        // responseType="code,token"
       />
     );
   }
