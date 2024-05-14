@@ -9,7 +9,6 @@ The goal of this JournalRecorder application was to demonstrate a working knowle
 ## Further TODOs:
 
 - Add search functionality, both across journals and within a journal
-- Add Update and Delete functionality, for journals and notes
 - Store JWT in browser cookies, allowing the user to refresh the page without having to log back in.
 - Add routing (for journals, ids)
 
